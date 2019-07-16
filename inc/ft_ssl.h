@@ -6,18 +6,17 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/06 19:59:44 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/16 16:00:37 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SSL_H
+# define FT_SSL_H
 
-#include "./libft-ft_printf/ft_printf.h"
+#include "../libft-ft_printf/ft_printf.h"
 #include <fcntl.h>
 #include <errno.h>
-
-# define FT_SSL_H
-# define BUFSIZE 5
+# define BUFSIZE 1024
 // 1024
 
 enum error_type 

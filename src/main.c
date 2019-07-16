@@ -6,11 +6,13 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/06 20:20:48 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/16 18:15:25 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./ft_ssl.h"
+#include "../inc/ft_ssl.h"
+
+//run:  ./ft_ssl
 
 int main(int ac, char **av) {
 

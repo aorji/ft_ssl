@@ -6,11 +6,11 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/06 20:55:36 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/16 15:29:27 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "../inc/ft_ssl.h"
 
 t_input *read_message_from_stdin(t_input *input)
 {

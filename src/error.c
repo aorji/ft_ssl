@@ -6,11 +6,11 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/06 20:56:46 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/16 15:28:55 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "../inc/ft_ssl.h"
 
 t_input *validate_input(int ac, char **av)
 {
