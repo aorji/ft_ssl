@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/16 16:00:37 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/16 20:06:54 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include "../libft-ft_printf/ft_printf.h"
 #include <fcntl.h>
 #include <errno.h>
-# define BUFSIZE 1024
-// 1024
+# define BUFSIZE 2
 
 enum error_type 
 {

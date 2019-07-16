@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/16 15:29:27 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/16 20:07:51 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_input *read_message_from_stdin(t_input *input)
 
 t_input *read_message_from_file(t_input *input, char *filename)
 {
-    char    buf[BUFSIZE];
+    char    buf[BUFSIZE + 1];
     size_t  input_size = 0;
     char    *resulting_str = (char *)malloc(sizeof(char) * input_size);
     resulting_str[0] = '\0';
@@ -52,7 +52,7 @@ t_input *read_message_from_file(t_input *input, char *filename)
     file = fopen(filename, "r");
     if ( !file )
     {
-        ft_printf("%s%s\n", "ft_ssl: Error opening file");
+        ft_printf("%s%s\n", "ft_ssl: Error while opening the file");
         input->error = INVALIDE_FILE;
         return input;
     }
@@ -66,11 +66,16 @@ t_input *read_message_from_file(t_input *input, char *filename)
             ft_strcat(resulting_str, buf);
             if ( resulting_str[input_size - 1] == '\n')
                 break;
-            continue;
         }
         else
         {
-            write(1, "error: reader.c : line 28", 5);
+            if (ferror(stdin))  //return 0 if an error occurred
+            {
+                ft_printf("%s%s\n", "ft_ssl: Error while reading the file");
+                input->error = INVALIDE_FILE;
+                return input;
+            }
+            break;
         }
     }
     input->message = resulting_str;
