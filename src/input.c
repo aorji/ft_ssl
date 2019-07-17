@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 16:49:01 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/17 20:03:56 by aorji            ###   ########.fr       */
+/*   Created: 2019/07/17 15:23:30 by aorji             #+#    #+#             */
+/*   Updated: 2019/07/17 15:39:28 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-int         sha256(t_input *input)
+t_input *create_input( void )
 {
-    ft_printf("\n----------I AM sha256----------\n");
-    ft_listdisp(input->message);
-    return 1;    
+    t_input *input = (t_input *)malloc(sizeof(t_input));
+    input->message = NULL;
+    input->cmd_opts = 0;
+    input->error = 0;
+    return input;
 }

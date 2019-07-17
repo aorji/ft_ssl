@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/17 13:20:46 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/17 19:49:01 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 
 int         md5(t_input *input)
 {
-    ft_printf("md5: %s", input->message);
-    if (input->message != NULL)
+    ft_printf("\n----------I AM md5----------\n");
+    ft_listdisp(input->message);
     return 1;
-    else
-    {
-        return 1;
-    }
-    
 }

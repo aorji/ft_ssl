@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/17 13:19:49 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/17 20:25:09 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../libft-ft_printf/ft_printf.h"
 #include <fcntl.h>
 #include <errno.h>
+
 # define BUFSIZE 2
 
 enum error_type 
@@ -28,22 +29,29 @@ enum error_type
 
 enum cmd_type 
 {
-    MD5 = 0,
-    SHA256 = 1
+    NO_TYPE = 0,
+    MD5 = 1,
+    SHA256 = 2
 };
 
 typedef	struct		s_input
 {
-    char            *message;
+    t_list          *message;
 	enum cmd_type   cmd_opts;
     enum error_type error;
 }					t_input;
 
 t_input     *read_message_from_stdin(t_input *);
-t_input     *read_message_from_file(t_input *, char *);
+t_input     *read_message_from_file(t_input *, int, char **);
 
 int         md5(t_input *);
 int         sha256(t_input *);
 
-t_input     *validate_input(int, char **);
+t_input     *create_input( void );
+void        validate_input(t_input *, int, char **);
+
+// queue simulation
+void        push_back(t_list **, char *);
+t_list      *pop_front(t_list **);
+
 #endif
