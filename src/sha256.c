@@ -6,14 +6,15 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:49:01 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/16 15:29:32 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/17 13:20:51 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-int         run_sha256(t_input *input)
+int         sha256(t_input *input)
 {
+    ft_printf("sha256: %s", input->message);
     if (input->message != NULL)
     return 1;
     else

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   validator.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -20,7 +20,7 @@ t_input *validate_input(int ac, char **av)
     if (ac < 2)
     {
         input->error = 1;
-        ft_printf("%s\n", "usage: ft_ssl command [command opts] [command args]");
+        write(0, "usage: ft_ssl command [command opts] [command args]\n", 52);
         return input;
     }
     
@@ -31,7 +31,9 @@ t_input *validate_input(int ac, char **av)
     else
     {
         input->error = 2;
-        ft_printf("%s%s%s", "ft_ssl: Error:'", av[1], "' is an invalid command.\nStandard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
+        write(0, "ft_ssl: Error: '", 16);
+        write(0, av[1], ft_strlen(av[1]));
+        write(0, "' is an invalid command.\nStandard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n", 99);
     }
 
     return input;

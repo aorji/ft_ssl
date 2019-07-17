@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/16 20:06:54 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/17 13:19:49 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef	struct		s_input
 t_input     *read_message_from_stdin(t_input *);
 t_input     *read_message_from_file(t_input *, char *);
 
-int         run_md5(t_input *);
-int         run_sha256(t_input *);
+int         md5(t_input *);
+int         sha256(t_input *);
 
 t_input     *validate_input(int, char **);
 #endif

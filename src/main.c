@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/16 18:15:25 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/17 13:20:36 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,11 @@ int main(int ac, char **av) {
     if (input->error)
         return 0;
 
-    ft_printf("%s", input->message);
+    // run requested hashing algorithm
+    int (*hashing_algorithm[])(t_input *) = {md5, sha256}; 
+    (*hashing_algorithm[input->cmd_opts])(input);
+
     // system ("leaks a.out");
-    
-    //run md5
-    if (!ft_strcmp(input->message, "md5"))
-        return run_md5(input);
-    
-    // run sha256
-    else if (!ft_strcmp(input->message, "sha256"))
-        return run_sha256(input);
 
     return 0;
 }

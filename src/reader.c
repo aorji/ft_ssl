@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/16 20:07:51 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/17 13:01:43 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ t_input *read_message_from_file(t_input *input, char *filename)
     {
         if (fgets(buf, sizeof buf, file))
         {
-            input_size += ft_strlen(buf);
-            resulting_str = (char *)realloc(resulting_str, input_size); 
+            input_size += sizeof buf;
+            resulting_str = (char *)realloc(resulting_str, input_size);
             ft_strcat(resulting_str, buf);
             if ( resulting_str[input_size - 1] == '\n')
                 break;

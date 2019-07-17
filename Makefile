@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/07/16 18:11:22 by aorji            ###   ########.fr        #
+#    Updated: 2019/07/17 13:01:33 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIB_DIR	=	./lib/
 CC      =	gcc
 FLAGS   =   -Wall -Wextra -Werror
 
-SRC     =   main.c error.c md5.c reader.c sha256.c
+SRC     =   main.c validator.c md5.c reader.c sha256.c
 OBJ     =   $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 INC		=	$(INC_DIR)
 PRNTF	=	libft-ft_printf/libftprintf.a
@@ -30,8 +30,7 @@ PRNTF	=	libft-ft_printf/libftprintf.a
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	#$(FLAGS) ?
-	$(CC) $(OBJ) -o $(NAME)	$(PRNTF) -I $(INC) $(FLAGS)
+	$(CC) $(OBJ) -o $(NAME)	$(PRNTF) -I $(INC)
 	echo "\033[32m[ ✔ ] "$(NAME) created" \033[0m"
 
 $(OBJ): $(LIB_DIR) $(OBJ_DIR)
@@ -44,9 +43,8 @@ $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)%.o:	$(SRC_DIR)%.c
-	#$(FLAGS) ?
 	# -c == Compile the source files, but do not link ==> .o
-	$(CC) $< -c -o $@ 
+	$(CC) $(FLAGS) $< -c -o $@ 
 
 re:
 	make fclean
