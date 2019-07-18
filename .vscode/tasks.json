@@ -3,10 +3,33 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
+        // {
+        //     "label": "build",
+        //     "type": "shell",
+        //     "command": "gcc",
+        //     "args": [
+        //         "src/**",
+        //         "inc/**",
+        //         "-o",
+        //         "${workspaceFolderBasename}"
+        //     ]
+        // },
+        // {
+        //     "label": "run",
+        //     "type": "shell",
+        //     "command": "./${workspaceFolderBasename}",
+        //     "args": [
+        //         "md5",
+        //         "f1.txt"
+        //     ],
+        //     "dependsOn": [
+        //         "build"
+        //     ],
+        //     "problemMatcher": []
+        // }
         {
-            "label": "echo",
-            "type": "shell",
-            "command": "echo Hello"
-        }
-    ]
+            "label": "make re",
+            "command": "make re",
+            "type": "shell"
+        }]
 }

@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/17 20:25:09 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/18 17:35:04 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,21 @@ enum cmd_type
 
 typedef	struct		s_input
 {
+    int             ac;
+    char            **av;
     t_list          *message;
 	enum cmd_type   cmd_opts;
     enum error_type error;
 }					t_input;
 
 t_input     *read_message_from_stdin(t_input *);
-t_input     *read_message_from_file(t_input *, int, char **);
+t_input     *read_message_from_file(t_input *);
 
 int         md5(t_input *);
 int         sha256(t_input *);
 
-t_input     *create_input( void );
-void        validate_input(t_input *, int, char **);
+t_input     *create_input(int ac, char **av);
+void        validate_input(t_input *);
 
 // queue simulation
 void        push_back(t_list **, char *);

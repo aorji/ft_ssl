@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:54:32 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/17 20:25:05 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/18 17:54:13 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,22 @@ void    push_back(t_list **message_queue, char *message)
 
 t_list  *pop_front( t_list **message_queue )
 {
+    t_list *tail = NULL;
     t_list *head = *message_queue;
+
+    if (!head)
+        return NULL;
+    if (!(head->next))
+    {
+        tail = head;
+        head = NULL;
+        return tail;
+    }
     while(head->next->next)
     {
         head = head->next;
     }
-    t_list *tail = head->next;
+    tail = head->next;
     head->next = NULL;
     return tail;
 }

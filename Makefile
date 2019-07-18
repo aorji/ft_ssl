@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/07/17 15:22:54 by aorji            ###   ########.fr        #
+#    Updated: 2019/07/18 16:57:05 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INC_DIR =	./inc/
 LIB_DIR	=	./lib/
 
 CC      =	gcc
-FLAGS   =   -Wall -Wextra -Werror
+FLAGS   =   -Wall -Wextra -Werror --debug
 
 SRC     =   main.c validator.c md5.c reader.c sha256.c queue.c input.c
 OBJ     =   $(addprefix $(OBJ_DIR), $(SRC:.c=.o))

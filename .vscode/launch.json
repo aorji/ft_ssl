@@ -4,18 +4,26 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
-            "name": "(lldb) Launch",
-            "type": "cppdbg",
+            "name": "Launch",
+            "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/ft_ssl",
-            "args": ["sha256", "tests/test_filen.txt" ],
-            "stopAtEntry": false,
+            "preLaunchTask": "make re",
+            "args": ["md5", "tests/f1.txt", "tests/f2.txt", "tests/f3.txt" ],
+            // "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "lldb"
+            // "environment": [],
+            // "externalConsole": true,
+            "linux": {
+                "MIMode": "gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            },
+            "windows": {
+                "MIMode": "gdb"
+            }
         }
     ]
 }

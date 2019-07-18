@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/17 20:35:11 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/18 17:17:01 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ t_input *read_message_from_stdin(t_input *input)
     return input;
 }
 
-t_input *read_message_from_file(t_input *input, int ac, char **av)
+t_input *read_message_from_file(t_input *input)
 {
     char    buf[BUFSIZE + 1];
     size_t  input_size = 0;
 
-    for (int i = 2; i < ac; ++i)
+    for (int i = 2; i < input->ac; ++i)
     {
         char    *resulting_str = (char *)malloc(sizeof(char) * input_size);
         resulting_str[0] = '\0';
-        FILE *file = fopen(av[i], "r");
+        FILE *file = fopen((input->av)[i], "r");
 
         if ( !file )
         {

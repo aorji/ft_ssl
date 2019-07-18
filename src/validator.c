@@ -12,23 +12,23 @@
 
 #include "../inc/ft_ssl.h"
 
-void validate_input(t_input *input, int ac, char **av)
+void validate_input(t_input *input)
 {
-    if (ac < 2)
+    if (input->ac < 2)
     {
         input->error = 1;
         ft_printf("%s", "usage: ft_ssl command [command opts] [command args]\n");
         return ;
     }
     
-    if (!ft_strcmp(av[1], "md5"))
+    if (!ft_strcmp((input->av)[1], "md5"))
         input->cmd_opts = 1;
-    else if (!ft_strcmp(av[1], "sha256"))
+    else if (!ft_strcmp((input->av)[1], "sha256"))
         input->cmd_opts = 2;
     else
     {
         input->error = 2;
-        ft_printf("%s%s%s", "ft_ssl: Error: '", av[1], "' is an invalid command.\nStandard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
+        ft_printf("%s%s%s", "ft_ssl: Error: '", (input->av)[1], "' is an invalid command.\nStandard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
     }
 }
 
