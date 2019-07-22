@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/19 17:21:40 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/22 19:54:41 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <errno.h>
 
 # define BUFSIZE 2
+
+// char FLAGS_OPT[5] ="pqrs:";
 
 enum error_type 
 {
@@ -33,6 +35,14 @@ enum cmd_type
     MD5 = 1,
     SHA256 = 2
 };
+
+// typedef	struct		s_argument
+// {
+//     char            *hash_func;
+//     t_list          *flags;
+//     t_list          *files;
+//     t_list          *strings;
+// }					t_argument;
 
 typedef	struct		s_input
 {
