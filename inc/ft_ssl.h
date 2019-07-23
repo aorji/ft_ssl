@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/23 17:51:47 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/23 18:58:42 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../libft-ft_printf/ft_printf.h"
 #include <fcntl.h>
 #include <errno.h>
+#include <math.h>
 
 # define BUFSIZE 512
 
