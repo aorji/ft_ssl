@@ -6,63 +6,51 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/22 21:29:00 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/23 17:59:37 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ssl.h"
-
-static unsigned char PADDING[64] = {
-  0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-};
-
-static void print_bitset(uint8_t *str, size_t len)
-{
-    size_t i = 0;
-    while (i < len)
-    {
-        ft_printf("%s ", ft_itoa_base((int)(str[i]), 2));
-        i++;
-    }
-    ft_printf("\n");
-}
+#include "../inc/md5.h"
 
 static int ft_padding_len(size_t message_len)
 {
-    int sub = message_len % 512;
-    return ( sub < 448 ) ? (448 - sub) : (960 - sub);
+    int sub = message_len % n;
+    return ( sub < a ) ? (a - sub) : (a + n - sub);
 }
 
-static size_t append_padding_bits(t_list **message)
+/*
+ * step 1
+ */
+static void append_padding_bits(t_list **message, size_t from, size_t to)
 {
-    size_t bit_len = (*message)->content_size * 8;
-    int padding_bit_len = ft_padding_len(bit_len);
-    size_t new_len = bit_len/8 + padding_bit_len/8;
-
-    (*message)->content = realloc((*message)->content, new_len);
-    size_t i = bit_len/8;
-    while(i < new_len)
+    size_t i = from;
+    while(from < to)
     {
-        ((uint8_t *)((*message)->content))[i] = PADDING[i - bit_len/8];
-        ++i;
+        ((uint8_t *)((*message)->content))[from] = PADDING[from - i];
+        ++from;
     }
-    return new_len;
 }
 
-static size_t appent_lenght(t_list **message, size_t new_len)
+/*
+ * step 2
+ */
+static void append_lenght(t_list **message, size_t from, size_t len) //CHECK ORDER
 {
-    size_t len = (*message)->content_size;
-    (*message)->content = realloc((*message)->content, new_len + 8);        //64-bit representation of the length of the alignment data
-    for(int j = 7; j >= 0; --j)
+    for(size_t i = (*message)->content_size - 1; i >= from; --i)
     {
-        ((uint8_t *)((*message)->content))[new_len + j] = (uint8_t)len;
-        len = len >> 8;
+        ((uint8_t *)((*message)->content))[i] = (uint8_t)len;
+        len = len >> BIT_NUM;
     }
-    return 0;
 }
 
+/*
+ * step 3
+ */
+
+
+/*
+ * entry piont
+ */
 int         md5(t_input *input)
 {
     ft_printf("\n----------I AM md5----------\n");
@@ -71,20 +59,27 @@ int         md5(t_input *input)
     //hash each file separately
     while (input->message)
     {
+        //get message from queue
         t_list *curr_message = pop_front(&(input->message));
-        ft_printf("\n%s\n", curr_message->content);
+        size_t message_len = curr_message->content_size;
+        ft_printf("\n%s\n        ", curr_message->content);
         print_bitset(curr_message->content, curr_message->content_size);
+        
+        //realloc message->content to have enough memmory for step1 and step2 
+        size_t message_bit_len = curr_message->content_size * BIT_NUM;
+        int padding_bit_len = ft_padding_len(message_bit_len);
+        curr_message->content = realloc(curr_message->content, curr_message->content_size + padding_bit_len/BIT_NUM + b/BIT_NUM);
+        curr_message->content_size = curr_message->content_size + padding_bit_len/BIT_NUM + b/BIT_NUM;
         
         //step 1
         ft_printf("step 1: ");
-        size_t new_len = append_padding_bits(&curr_message);
-        print_bitset(curr_message->content, new_len);
+        append_padding_bits(&curr_message, message_len, message_len + padding_bit_len/BIT_NUM);
+        print_bitset(curr_message->content, curr_message->content_size - b/BIT_NUM);
 
         // step 2
         ft_printf("step 2: ");
-        appent_lenght(&curr_message, new_len);
-        print_bitset(curr_message->content, new_len + 8);
-
+        append_lenght(&curr_message, message_len + padding_bit_len/BIT_NUM, message_len);
+        print_bitset(curr_message->content, curr_message->content_size);
     }
     return 1;
 }

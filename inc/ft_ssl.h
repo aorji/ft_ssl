@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/22 19:54:41 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/23 17:51:47 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
-# define BUFSIZE 2
+# define BUFSIZE 512
 
 // char FLAGS_OPT[5] ="pqrs:";
 
@@ -61,6 +61,8 @@ int         sha256(t_input *);
 
 t_input     *create_input(int ac, char **av);
 void        validate_input(t_input *);
+
+void        print_bitset(uint8_t *, size_t);
 
 // queue simulation
 void        push_back(t_list **, char *);
