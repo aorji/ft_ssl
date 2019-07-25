@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/24 20:00:09 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/25 15:34:34 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ static void append_padding_bits(t_list **message, size_t from, size_t to)
     {
         ((uint8_t *)((*message)->content))[from] = PADDING[from - i];
         ++from;
+    }
+}
+
+static void append_lenght(t_list **message, size_t from, size_t len)
+{
+    for(int i = 0; len != 0; ++i)
+    {
+        ((uint8_t *)(*message)->content)[from + i] = (uint8_t)(len);
+        len = len >> 8;
     }
 }
 
@@ -158,12 +167,13 @@ int         md5(t_input *input)
         curr_message->content_size = final_len;
         
         append_padding_bits(&curr_message, message_len, message_len + padding_bit_len/BIT_NUM);
-        ft_memcpy(curr_message->content + message_len + padding_bit_len/8, &message_len, 8);    /* append lenght */
+        append_lenght(&curr_message, final_len - 8, message_len * 8);
         A = A_;                                                                                 /* init magic numbers */
         B = B_;
         C = C_;
         D = D_;
         calculation_procedure(&curr_message);
+        print_bitset(curr_message->content, curr_message->content_size);
         ft_printf("MD5 (%s) = %x%x%x%x\n", input->av[i], A, B, C, D);
         ++i;
     }
