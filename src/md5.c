@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/26 16:07:49 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/26 17:24:33 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static void init_magic_num()
 static void calculation_procedure(t_list **message)
 {
     init_magic_num();
-    uint32_t *X;                             /* storage for nth block of 16 32-bit words */
-    size_t N = (*message)->content_size / 4;    /* byte_len * 8 => bit_len; bit_len / 32 => num of 32-bit words */
+    uint32_t *X;                                    /* storage for nth block of 16 32-bit words */
+    size_t N = (*message)->content_size / 4;        /* byte_len * 8 => bit_len; bit_len / 32 => num of 32-bit words */
 
-    for (size_t i = 0; i < N/16; ++i)           /* process each 16-word block. */
+    for (size_t i = 0; i < N/16; ++i)               /* process each 16-word block. */
     {
         X = ((*message)->content) + (i * 16);       /* copy i-th block of 16 32-bit words into X */
 
@@ -68,29 +68,27 @@ static void calculation_procedure(t_list **message)
         int32_t BB = B;
         int32_t CC = C;
         int32_t DD = D;
-        uint32_t res;
 
         for (int i = 0; i < 64; ++i)
         {
             if (i < 16)
-                res = F(B, C, D);
+                A += F(B, C, D);
             else if (i < 32)
-                res = G(B, C, D);
+                A += G(B, C, D);
             else if (i < 48)
-                res = H(B, C, D);
+                A += H(B, C, D);
             else
-                res = I(B, C, D);
-            res += A + T[i] + X[x[i]];
+                A += I(B, C, D);
+            uint32_t tmp = A + T[i] + X[x[i]];
             A = D;
             D = C;
             C = B;
-            B = B + ROTATE_LEFT(res, s[i]);
+            B = B + ROTATE_LEFT(tmp, s[i]);
         }
         A += AA;
         B += BB;
         C += CC;
         D += DD;
-        // ft_printf("b=%x    %x  %x  %x\n", A, B, C, D);
     }
 }
 
@@ -100,7 +98,7 @@ static void calculation_procedure(t_list **message)
 int         md5(t_input *input)
 {
     int i = 2;
-    while (input->message)                         /* hash each file separately */
+    while (input->message)                              /* hash each file separately */
     {
         t_list  *message = pop_front(&(input->message));
         size_t  message_size = message->content_size;

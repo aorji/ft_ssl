@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/26 16:07:01 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/26 17:18:56 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 /*
  * Basic MD5 functions.
  */
-#define F(x, y, z) (((x) & (y)) | ((!x) & (z)))
-#define G(x, y, z) (((x) & (z)) | ((y) & (!z)))
+#define F(x, y, z) (((x) & (y)) | ((~x) & (z)))
+#define G(x, y, z) (((x) & (z)) | ((y) & (~z)))
 #define H(x, y, z) ((x) ^ (y) ^ (z))
-#define I(x, y, z) ((y) ^ ((x) | (!z)))
+#define I(x, y, z) ((y) ^ ((x) | (~z)))
 
 /*
  * Constants for MD5Tr calculation_procedure
