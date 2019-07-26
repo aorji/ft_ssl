@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/24 19:57:07 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/26 13:50:03 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ t_input     *create_input(int ac, char **av);
 void        validate_input(t_input *);
 
 void        print_bitset(uint8_t *, size_t);
+void        print_xset(uint8_t *, size_t);
 
 // queue simulation
 void        push_back(t_list **, char *);
 t_list      *pop_front(t_list **);
+void    realloc_queue_item(t_list **, size_t);
 
 #endif

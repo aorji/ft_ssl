@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/24 18:31:59 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/26 13:34:34 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,26 +121,18 @@ static int32_t D = 0;
 
 /*
  * The message is "padded" (extended) so that its length (in bits) is congruent to 448, modulo 512
- * len = 448 mod 512 => len = a mod n
+ * len = 448 mod 512 (in bytes: len = 56 mod 64) => len = a mod n  
  */
-static const int  n = 512;
-static const int  a = 448;
+static const int  n = 64;
+static const int  a = 56;
 
 /*
- * The message is extended so that it is just 64 bits shy of being a multiple of 512 bits long
- * 512 - 448 = 64 => b = n - a
+ * A 64-bit representation of the length of the message before the padding bits were added
+ *  is appended to the result of step 1 ==> 8 bytre
  */
-static const int b = n - a;
-
-static const long two_pow_thirtytwo = 4294967296L;
+static const int LEN_SIZE = 8;
 
 static const int BIT_NUM = 8;
-
-
-// static long T(int i)
-// {
-//     return two_pow_thirtytwo * (fabs(sin(i)));
-// }
 
 
 // void  append_padding_bits(t_list **, size_t, size_t);

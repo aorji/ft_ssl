@@ -6,19 +6,19 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/25 15:34:34 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/26 13:52:13 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/md5.h"
 
-static int ft_padding_len(size_t message_len)
+static int padding_size(size_t message_size)
 {
-    int sub = message_len % n;
+    int sub = message_size % n;
     return ( sub < a ) ? (a - sub) : (a + n - sub);
 }
 
-static void append_padding_bits(t_list **message, size_t from, size_t to)
+static void append_padding(t_list **message, size_t from, size_t to)
 {
     size_t i = from;
     while(from < to)
@@ -122,6 +122,10 @@ static void round_4(uint32_t X[16])
  */
 static void calculation_procedure(t_list **message)
 {
+    A = A_;                                     /* init magic numbers */
+    B = B_;
+    C = C_;
+    D = D_;
     size_t N = (*message)->content_size / 4;    /* byte_len * 8 => bit_len; bit_len / 32 => num of 32-bit words */
 
     uint32_t X[16];                             /* storage for nth block of 16 32-bit words */
@@ -136,11 +140,15 @@ static void calculation_procedure(t_list **message)
         {
             X[j] = ((uint32_t *)((*message)->content))[i * 16 + j];
         }
-
+        ft_printf("%x    %x  %x  %x\n", A, B, C, D);
         round_1(X);                             /* Round 1 */
+        ft_printf("%x    %x  %x  %x\n", A, B, C, D);
         round_2(X);                             /* Round 2 */
+        ft_printf("%x    %x  %x  %x\n", A, B, C, D);
         round_3(X);                             /* Round 3 */
+        ft_printf("%x    %x  %x  %x\n", A, B, C, D);
         round_4(X);                             /* Round 4 */
+        ft_printf("%x    %x  %x  %x\n", A, B, C, D);
         
         A = A + AA;
         B = B + BB;
@@ -155,26 +163,22 @@ static void calculation_procedure(t_list **message)
 int         md5(t_input *input)
 {
     int i = 2;
-    while (input->message)                                                                      /* hash each file separately */
+    while (input->message)                         /* hash each file separately */
     {
-        t_list *curr_message = pop_front(&(input->message));
-        size_t message_len = curr_message->content_size;
-        
-        int padding_bit_len = ft_padding_len(curr_message->content_size * BIT_NUM);
-        size_t final_len = curr_message->content_size + padding_bit_len/BIT_NUM + b/BIT_NUM;
+        t_list  *message = pop_front(&(input->message));
+        size_t  message_size = message->content_size;
+        int     padding = padding_size(message_size);
+        size_t  final_size = message_size + padding + LEN_SIZE;
 
-        curr_message->content = realloc(curr_message->content, final_len);
-        curr_message->content_size = final_len;
+        realloc_queue_item(&message, final_size);
         
-        append_padding_bits(&curr_message, message_len, message_len + padding_bit_len/BIT_NUM);
-        append_lenght(&curr_message, final_len - 8, message_len * 8);
-        A = A_;                                                                                 /* init magic numbers */
-        B = B_;
-        C = C_;
-        D = D_;
-        calculation_procedure(&curr_message);
-        print_bitset(curr_message->content, curr_message->content_size);
-        ft_printf("MD5 (%s) = %x%x%x%x\n", input->av[i], A, B, C, D);
+        append_padding(&message, message_size, message_size + padding);
+        append_lenght(&message, message_size + padding, message_size * BIT_NUM);
+        calculation_procedure(&message);
+        
+        // print_bitset(message->content, message->content_size);
+        // print_xset(message->content, message->content_size);/
+        ft_printf("MD5 (%s) = %x    %x  %x  %x\n", input->av[i], A, B, C, D);
         ++i;
     }
     return 0;

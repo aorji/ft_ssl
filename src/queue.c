@@ -6,20 +6,26 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:54:32 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/23 16:46:05 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/26 13:19:22 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-void    push_back(t_list **message_queue, char *message)
+void realloc_queue_item(t_list **item, size_t len)
 {
-    t_list *new = ft_lstnew(message, ft_strlen(message));
-    t_list *tail = *message_queue;
+    (*item)->content = realloc((*item)->content, len);
+    (*item)->content_size = len;
+}
 
-    if (!(*message_queue))
+void    push_back(t_list **queue, char *item)
+{
+    t_list *new = ft_lstnew(item, ft_strlen(item));
+    t_list *tail = *queue;
+
+    if (!(*queue))
     {
-        *message_queue = new;
+        *queue = new;
         return ;
     }
     while( tail->next )
@@ -28,9 +34,9 @@ void    push_back(t_list **message_queue, char *message)
     return;
 }
 
-t_list  *pop_front( t_list **message_queue )
+t_list  *pop_front( t_list **queue )
 {
-    t_list *head = *message_queue;
-    *message_queue = (*message_queue)->next;
+    t_list *head = *queue;
+    *queue = (*queue)->next;
     return head;
 }
