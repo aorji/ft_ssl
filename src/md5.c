@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/26 17:24:33 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/26 17:54:21 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int         md5(t_input *input)
         append_padding(&message, message_size, message_size + padding);
         append_lenght(&message, message_size + padding, message_size * BIT_NUM);
         calculation_procedure(&message);
-        ft_printf("MD5 (%s) = %x    %x  %x  %x\n", input->av[i], A, B, C, D);
+        print_result(input->av[i], A, B, C, D);
 
         ++i;
     }

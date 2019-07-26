@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/26 17:18:56 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/26 17:53:47 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ static const int BIT_NUM = 8;
 // void  append_lenght(t_list **, size_t, size_t, size_t);
 // void  append_lenght(t_list **, size_t, size_t);
 // void  calculation_procedure(t_list **message);
+void print_result(char *, uint32_t, uint32_t, uint32_t, uint32_t);
 
 #endif
