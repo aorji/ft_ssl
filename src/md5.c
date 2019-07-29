@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/26 17:54:21 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/29 17:18:28 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static void append_lenght(t_list **message, size_t from, size_t len)
     
 static void init_magic_num()
 {
-    A = 0x67452301;
-    B = 0xefcdab89;
-    C = 0x98badcfe;
-    D = 0x10325476;
+    AA = 0x67452301;
+    BB = 0xefcdab89;
+    CC = 0x98badcfe;
+    DD = 0x10325476;
 }
 
 /*
@@ -58,37 +58,39 @@ static void calculation_procedure(t_list **message)
 {
     init_magic_num();
     uint32_t *X;                                    /* storage for nth block of 16 32-bit words */
-    size_t N = (*message)->content_size / 4;        /* byte_len * 8 => bit_len; bit_len / 32 => num of 32-bit words */
+    size_t N = (*message)->content_size;
 
-    for (size_t i = 0; i < N/16; ++i)               /* process each 16-word block. */
+    for (size_t offset = 0; offset < N; offset += 64)
     {
-        X = ((*message)->content) + (i * 16);       /* copy i-th block of 16 32-bit words into X */
 
-        int32_t AA = A;
-        int32_t BB = B;
-        int32_t CC = C;
-        int32_t DD = D;
+        X = (((*message)->content) + offset);      
 
-        for (int i = 0; i < 64; ++i)
+        A = AA;
+        B = BB;
+        C = CC;
+        D = DD;
+        printf("%x  %x  %x  %x\n", A, B, C, D);
+        for (int j = 0; j < 64; ++j)
         {
-            if (i < 16)
+            if (j < 16)
                 A += F(B, C, D);
-            else if (i < 32)
+            else if (j < 32)
                 A += G(B, C, D);
-            else if (i < 48)
+            else if (j < 48)
                 A += H(B, C, D);
             else
                 A += I(B, C, D);
-            uint32_t tmp = A + T[i] + X[x[i]];
+            uint32_t tmp = A + T[j] + X[x[j]];
             A = D;
             D = C;
             C = B;
-            B = B + ROTATE_LEFT(tmp, s[i]);
+            B = B + ROTATE_LEFT(tmp, s[j]);
         }
-        A += AA;
-        B += BB;
-        C += CC;
-        D += DD;
+        AA += A;
+        BB += B;
+        CC += C;
+        DD += D;
+        printf("%x  %x  %x  %x\n\n", A, B, C, D);
     }
 }
 
@@ -106,12 +108,10 @@ int         md5(t_input *input)
         size_t  final_size = message_size + padding + LEN_SIZE;
 
         realloc_queue_item(&message, final_size);
-        
         append_padding(&message, message_size, message_size + padding);
         append_lenght(&message, message_size + padding, message_size * BIT_NUM);
         calculation_procedure(&message);
         print_result(input->av[i], A, B, C, D);
-
         ++i;
     }
     return 0;

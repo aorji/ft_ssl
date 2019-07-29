@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/26 17:53:47 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/29 17:20:38 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ static uint8_t PADDING[] = {
 /*
  * Magic constants
  */
+static int32_t AA = 0;
+static int32_t BB = 0;
+static int32_t CC = 0;
+static int32_t DD = 0;
 static int32_t A = 0;
 static int32_t B = 0;
 static int32_t C = 0;

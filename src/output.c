@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:19:47 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/26 17:54:43 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/29 14:06:42 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@
 //     ft_printf("\n");
 // }
 
-// void print_xset(uint8_t *str, size_t len)
-// {
-//     size_t i = 0;
-//     while (i < len)
-//     {
-//         ft_printf("%x ", (int)(str[i]));
-//         i++;
-//     }
-//     ft_printf("\n");
-// }
+void print_xset(uint8_t *str, size_t len)
+{
+    size_t i = 0;
+    while (i < len)
+    {
+        ft_printf("%x ", (int)(str[i]));
+        i++;
+    }
+    ft_printf("\n");
+}
 
 void print_result(char *file, uint32_t A, uint32_t B, uint32_t C, uint32_t D)
 {
