@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/29 17:20:38 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/30 15:22:57 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,10 @@ static uint8_t PADDING[] = {
 /*
  * Magic constants
  */
-static int32_t AA = 0;
-static int32_t BB = 0;
-static int32_t CC = 0;
-static int32_t DD = 0;
-static int32_t A = 0;
-static int32_t B = 0;
-static int32_t C = 0;
-static int32_t D = 0;
+static uint32_t AA = 0;
+static uint32_t BB = 0;
+static uint32_t CC = 0;
+static uint32_t DD = 0;
 
 /*
  * The message is "padded" (extended) so that its length (in bits) is congruent to 448, modulo 512

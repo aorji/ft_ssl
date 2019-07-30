@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/29 17:18:28 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/30 15:27:30 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,14 @@ static void calculation_procedure(t_list **message)
 {
     init_magic_num();
     uint32_t *X;                                    /* storage for nth block of 16 32-bit words */
-    size_t N = (*message)->content_size;
-
-    for (size_t offset = 0; offset < N; offset += 64)
+    size_t N = (*message)->content_size / 4;        /* num of 32 bit words in message. should me multip of 16 */
+    for (size_t offset = 0; offset < N; offset += 16)
     {
-
-        X = (((*message)->content) + offset);      
-
-        A = AA;
-        B = BB;
-        C = CC;
-        D = DD;
-        printf("%x  %x  %x  %x\n", A, B, C, D);
+        X = ((uint32_t *)(*message)->content) + offset;
+        uint32_t A = AA;
+        uint32_t B = BB;
+        uint32_t C = CC;
+        uint32_t D = DD;
         for (int j = 0; j < 64; ++j)
         {
             if (j < 16)
@@ -90,7 +86,6 @@ static void calculation_procedure(t_list **message)
         BB += B;
         CC += C;
         DD += D;
-        printf("%x  %x  %x  %x\n\n", A, B, C, D);
     }
 }
 
@@ -111,7 +106,8 @@ int         md5(t_input *input)
         append_padding(&message, message_size, message_size + padding);
         append_lenght(&message, message_size + padding, message_size * BIT_NUM);
         calculation_procedure(&message);
-        print_result(input->av[i], A, B, C, D);
+        // ft_printf("%x   %x  %x  %x", AA, BB, CC, DD);
+        print_result(input->av[i], AA, BB, CC, DD);
         ++i;
     }
     return 0;
