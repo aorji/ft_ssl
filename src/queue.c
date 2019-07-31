@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:54:32 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/30 15:11:16 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/30 15:35:08 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void realloc_queue_item(t_list **item, size_t size)
 {
     (*item)->content = realloc((*item)->content, size);
-    ft_bzero((*item)->content + (*item)->content_size, size - (*item)->content_size);
     (*item)->content_size = size;
 }
 

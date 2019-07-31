@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/19 17:28:56 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/31 17:29:35 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,14 @@
 int main(int ac, char **av)
 {
     t_input *input = create_input(ac, av);
+
     // validate input
     validate_input(input);
     if (input->error)
         return 0;
     
     // read messages
-    (ac > 2) ? read_message_from_file(input) : read_message_from_stdin(input);
-    if (input->error)
-        return 0;
+    read_messages(input);
 
     // run requested hashing algorithm
     int (*hashing_algorithm[])(t_input *) = { &md5, &sha256 };

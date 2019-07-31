@@ -12,69 +12,87 @@
 
 #include "../inc/ft_ssl.h"
 
-// void parser(int ac, char **av)
-// {
-//     //create t_argv
-
-//     if (ac < 2)
-//     {
-//         // input->error = 1;
-//         ft_printf("%s", "usage: ft_ssl command [command opts] [command args]\n");
-//         return ;
-//     }
-//     int i = 1;
-//     t_argument->hash_func = av[i];
-//     while(av[i][1] == '-')
-//     {
-//         append(t_argument->flags, av[i]);
-//     }
-//     while (i < ac)
-//     {
-//         append(t_argument->files, av[i]);
-//     }
-// }
-
-// int ft_getopt()
-// {
-
-// }
-
-// t_argument *parser(int ac, char **av)
-// {
-//     int i = 1;
-//     t_argument *arg_value = (t_argument *)malloc(sizeof(t_argument));
-
-//     if (ac < 2)
-//     {
-//         // ERROR
-//     }
-//     arg_value->hash_func = av[i++];
-//     if (av[i][1] == '-')
-//         i += ft_getopt(ac, av);
-//     while (i < ac)
-//     {
-//         append(arg_value->files, av[i]);
-//     }
-//     return;
-// }
-
-void validate_input(t_input *input)
+static void add_flag(t_input *input)
 {
-    if (input->ac < 2)
+    int j = 1;
+    while ((input->av)[input->position][j])
     {
-        input->error = 1;
-        ft_printf("%s", "usage: ft_ssl command [command opts] [command args]\n");
-        return ;
+        if ((input->av)[input->position][j] < input->flag->flags_opt[0] || (input->av)[input->position][j] > input->flag->flags_opt[no_arg_flag_num - 1])
+        {
+            ft_printf("%s%c%s\n", "md5: illegal option -- ", (input->av)[input->position][j], "\nusage: md5 [-pqr] [-s string] [files ...]");
+            input->error = INVALIDE_FLAG;
+            return;
+        }
+        if ((input->av)[input->position][j] == 's')
+        {
+            input->read_from = FILE_STRING;
+            if ((input->av)[input->position][j + 1] == '\0')            /* example: "-s" "string" */ 
+            {
+                if (!(input->av)[input->position + 1])
+                {
+                    ft_printf("%s\n", "md5: option requires an argument -- s\nusage: md5 [-pqrtx] [-s string] [files ...]");
+                    input->error = INVALIDE_FLAG;
+                    return;
+                }
+                push_back(&input->message, input->av[input->position + 1]);
+                push_back(&input->message_name, input->av[input->position + 1]);
+                (input->flag->flags_set)[(input->av)[input->position][j] % (input->flag->flags_opt)[0]] = 1;
+                input->position++;
+                return;
+            }
+            else                                                        /* example: "-sstring" */
+            {
+                push_back(&input->message, ft_strsub(input->av[input->position], j + 1, ft_strlen(input->av[input->position]) - j - 1));
+                push_back(&input->message_name, ft_strsub(input->av[input->position], j + 1, ft_strlen(input->av[input->position]) - j - 1));
+                (input->flag->flags_set)[(input->av)[input->position][j] % (input->flag->flags_opt)[0]] = 1;
+                return;
+            }
+        }
+        (input->flag->flags_set)[(input->av)[input->position][j] % (input->flag->flags_opt)[0]] = 1;
+        j++;
     }
-    
+}
+
+static void flags_options(t_input *input)
+{
+    input->position = 2;
+    while (input->position < input->ac && (input->av)[input->position][0] == '-' && !(input->error))
+    {
+        add_flag(input);
+        input->position++;
+    }
+}
+
+static void cmd_options(t_input *input)
+{
+    if (input->error)
+        return;
     if (!ft_strcmp((input->av)[1], "md5"))
         input->cmd_opts = 1;
     else if (!ft_strcmp((input->av)[1], "sha256"))
         input->cmd_opts = 2;
     else
     {
-        input->error = 2;
+        input->error = INVALIDE_CMD;
         ft_printf("%s%s%s", "ft_ssl: Error: '", (input->av)[1], "' is an invalid command.\nStandard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
     }
 }
 
+static void param_num(t_input *input)
+{
+    if (input->ac < 2)
+    {
+        input->error = NO_CMD;
+        ft_printf("%s", "usage: ft_ssl command [command opts] [command args]\n");
+    }
+}
+
+void validate_input(t_input *input)
+{
+    param_num(input);
+    cmd_options(input);
+    flags_options(input);
+
+    if (input->position < input->ac)
+        input->read_from = FILE_STRING;
+}

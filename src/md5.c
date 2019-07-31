@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/30 15:27:30 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/31 17:53:30 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void append_padding(t_list **message, size_t from, size_t to)
  */
 static void append_lenght(t_list **message, size_t from, size_t len)
 {
-    for(int i = 0; len != 0; ++i)
+    for(int i = 0; i < 8; ++i)      /* 8 time by 8 bits => 64-bit of the length of the message is appended */
     {
         ((uint8_t *)(*message)->content)[from + i] = (uint8_t)(len);
         len = len >> 8;
@@ -94,7 +94,6 @@ static void calculation_procedure(t_list **message)
  */
 int         md5(t_input *input)
 {
-    int i = 2;
     while (input->message)                              /* hash each file separately */
     {
         t_list  *message = pop_front(&(input->message));
@@ -105,10 +104,10 @@ int         md5(t_input *input)
         realloc_queue_item(&message, final_size);
         append_padding(&message, message_size, message_size + padding);
         append_lenght(&message, message_size + padding, message_size * BIT_NUM);
+        // print_xset(message->content, message->content_size);
         calculation_procedure(&message);
         // ft_printf("%x   %x  %x  %x", AA, BB, CC, DD);
-        print_result(input->av[i], AA, BB, CC, DD);
-        ++i;
+        print_result(input, AA, BB, CC, DD);
     }
     return 0;
 }

@@ -11,7 +11,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/ft_ssl",
             "preLaunchTask": "make re",
-            "args": ["md5", "tests/f5.txt" ],
+            "args": ["md5", "-sdd", "-s", "hello", "-s", "world" ],
             // "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             // "environment": [],

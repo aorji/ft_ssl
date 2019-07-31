@@ -6,13 +6,13 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/19 16:43:10 by aorji            ###   ########.fr       */
+/*   Updated: 2019/07/31 17:41:58 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-t_input *read_message_from_stdin(t_input *input)
+static void read_message_from_stdin(t_input *input)
 {
     char    buf[BUFSIZE];
     size_t  input_size = 0;
@@ -33,25 +33,24 @@ t_input *read_message_from_stdin(t_input *input)
         break;
     }
     push_back(&input->message, resulting_str);
-    return input;
 }
 
-t_input *read_message_from_file(t_input *input)
+static void read_message_from_file(t_input *input)
 {
     char    buf[BUFSIZE + 1];
     size_t  input_size = 0;
 
-    for (int i = 2; i < input->ac; ++i)
+    for (; input->position < input->ac; ++(input->position))
     {
         char    *resulting_str = (char *)malloc(sizeof(char) * input_size);
         resulting_str[0] = '\0';
-        FILE *file = fopen((input->av)[i], "r");
+        FILE *file = fopen((input->av)[input->position], "r");
 
         if ( !file )
         {
-            ft_printf("%s", "ft_ssl: Error while opening the file\n");
-            input->error = INVALIDE_FILE;
-            return input;
+            ft_printf("%s: %s: %s", "ft_ssl", (input->av)[input->position], "Error while opening the file\n");
+            // input->error = INVALIDE_FILE;
+            continue;
         }
         while ( 1 )
         {
@@ -68,16 +67,26 @@ t_input *read_message_from_file(t_input *input)
                 if (ferror(stdin))  //return 0 if an error occurred
                 {
                     ft_printf("%s", "ft_ssl: Error while reading the file\n");
-                    input->error = INVALIDE_FILE;
-                    return input;
+                    // input->error = INVALIDE_FILE;
+                    continue;
                 }
                 break;
             }
         }
         push_back(&input->message, resulting_str);
+        push_back(&input->message_name, (input->av)[input->position]);
         fclose(file);
     }
-    return input;  
+}
+ 
+void read_messages(t_input *input)
+{
+    if (input->read_from == STDIN)
+    {
+        read_message_from_stdin(input);
+        return;
+    }
+    read_message_from_file(input);
 }
 
 
