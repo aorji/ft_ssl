@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/01 17:28:02 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/01 17:46:32 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void        read_message_from_stdin(t_input *);
 
 void        call_hashing_algorithm(t_input *);
 
-void        print_bitset(uint8_t *, size_t);
-void        print_xset(uint8_t *, size_t);
+// void        print_bitset(uint8_t *, size_t);
+// void        print_xset(uint8_t *, size_t);
 
 #endif

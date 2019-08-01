@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/08/01 16:29:11 by aorji            ###   ########.fr        #
+#    Updated: 2019/08/01 17:47:52 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIB_DIR	=	./lib/
 CC      =	gcc
 FLAGS   =   -Wall -Wextra -Werror --debug
 
-SRC     =   main.c validator.c reader.c output.c process_flags.c setters.c	\
+SRC     =   main.c validator.c reader.c md5_output.c process_flags.c setters.c	\
 			md5.c																	\
 			sha256.c  
 OBJ     =   $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
