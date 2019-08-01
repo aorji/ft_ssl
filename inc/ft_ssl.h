@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/01 17:46:32 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/01 18:04:45 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef	struct		s_input
     enum input_type read_from;
     t_flag          *flag;
     void            *message;
-    size_t          message_size; //change to uint64_t
+    size_t          message_size;
     char            *message_name;
 }					t_input;
 
