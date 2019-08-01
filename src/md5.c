@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/31 17:53:30 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/01 14:37:36 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static int padding_size(size_t message_size)
 /*
  * step 1
  */
-static void append_padding(t_list **message, size_t from, size_t to)
+static void append_padding(void *message, size_t from, size_t to)
 {
     size_t i = from;
     while(from < to)
     {
-        ((uint8_t *)((*message)->content))[from] = PADDING[from - i];
+        ((uint8_t *)message)[from] = PADDING[from - i];
         ++from;
     }
 }
@@ -34,11 +34,11 @@ static void append_padding(t_list **message, size_t from, size_t to)
 /*
  * step 2
  */
-static void append_lenght(t_list **message, size_t from, size_t len)
+static void append_lenght(void *message, size_t from, size_t len)
 {
     for(int i = 0; i < 8; ++i)      /* 8 time by 8 bits => 64-bit of the length of the message is appended */
     {
-        ((uint8_t *)(*message)->content)[from + i] = (uint8_t)(len);
+        ((uint8_t *)message)[from + i] = (uint8_t)(len);
         len = len >> 8;
     }
 }
@@ -54,14 +54,14 @@ static void init_magic_num()
 /*
  * step 3
  */
-static void calculation_procedure(t_list **message)
+static void calculation_procedure(void *message, size_t message_size)
 {
     init_magic_num();
     uint32_t *X;                                    /* storage for nth block of 16 32-bit words */
-    size_t N = (*message)->content_size / 4;        /* num of 32 bit words in message. should me multip of 16 */
+    size_t N = message_size / 4;                    /* num of 32 bit words in message. should me multip of 16 */
     for (size_t offset = 0; offset < N; offset += 16)
     {
-        X = ((uint32_t *)(*message)->content) + offset;
+        X = ((uint32_t *)message) + offset;
         uint32_t A = AA;
         uint32_t B = BB;
         uint32_t C = CC;
@@ -94,20 +94,16 @@ static void calculation_procedure(t_list **message)
  */
 int         md5(t_input *input)
 {
-    while (input->message)                              /* hash each file separately */
-    {
-        t_list  *message = pop_front(&(input->message));
-        size_t  message_size = message->content_size;
-        int     padding = padding_size(message_size);
-        size_t  final_size = message_size + padding + LEN_SIZE;
+    int     padding = padding_size(input->message_size);
+    size_t  final_size = input->message_size + padding + LEN_SIZE;
+    size_t  message_size = input->message_size;
 
-        realloc_queue_item(&message, final_size);
-        append_padding(&message, message_size, message_size + padding);
-        append_lenght(&message, message_size + padding, message_size * BIT_NUM);
-        // print_xset(message->content, message->content_size);
-        calculation_procedure(&message);
-        // ft_printf("%x   %x  %x  %x", AA, BB, CC, DD);
-        print_result(input, AA, BB, CC, DD);
-    }
+    input->message = realloc(input->message, final_size);
+    input->message_size = final_size;
+    append_padding(input->message, message_size, message_size + padding);
+    append_lenght(input->message, message_size + padding, message_size * BIT_NUM);
+    calculation_procedure(input->message, input->message_size);
+    print_result(input, AA, BB, CC, DD);
+    free(input->message);
     return 0;
 }
