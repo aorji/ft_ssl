@@ -6,17 +6,17 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/01 14:37:36 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/08 16:26:28 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/md5.h"
 
-static int padding_size(size_t message_size)
-{
-    int sub = message_size % n;
-    return ( sub < a ) ? (a - sub) : (a + n - sub);
-}
+// static int padding_size(size_t message_size)
+// {
+//     int sub = message_size % n;
+//     return ( sub < a ) ? (a - sub) : (a + n - sub);
+// }
 
 /*
  * step 1
@@ -54,14 +54,14 @@ static void init_magic_num()
 /*
  * step 3
  */
-static void calculation_procedure(void *message, size_t message_size)
+static void calculation_procedure(void *message)
 {
-    init_magic_num();
-    uint32_t *X;                                    /* storage for nth block of 16 32-bit words */
-    size_t N = message_size / 4;                    /* num of 32 bit words in message. should me multip of 16 */
-    for (size_t offset = 0; offset < N; offset += 16)
-    {
-        X = ((uint32_t *)message) + offset;
+    // uint32_t *X;                                    /* storage for nth block of 16 32-bit words */
+    // size_t N = message_size / 4;                    /* num of 32 bit words in message. should me multip of 16 */
+    // for (size_t offset = 0; offset < 16; offset += 16)
+    // {
+        // X = ((uint32_t *)message) + offset;
+        uint32_t *X = ((uint32_t *)message);
         uint32_t A = AA;
         uint32_t B = BB;
         uint32_t C = CC;
@@ -86,7 +86,7 @@ static void calculation_procedure(void *message, size_t message_size)
         BB += B;
         CC += C;
         DD += D;
-    }
+    // }
 }
 
 /*
@@ -94,16 +94,26 @@ static void calculation_procedure(void *message, size_t message_size)
  */
 int         md5(t_input *input)
 {
-    int     padding = padding_size(input->message_size);
-    size_t  final_size = input->message_size + padding + LEN_SIZE;
-    size_t  message_size = input->message_size;
-
-    input->message = realloc(input->message, final_size);
-    input->message_size = final_size;
-    append_padding(input->message, message_size, message_size + padding);
-    append_lenght(input->message, message_size + padding, message_size * BIT_NUM);
-    calculation_procedure(input->message, input->message_size);
-    print_result(input, AA, BB, CC, DD);
-    free(input->message);
-    return 0;
+    static enum hash_mode mode = START;
+    if (mode == START)
+        init_magic_num();
+    mode = CONTINUE;
+    
+    if (input->message_size < n)
+    {
+        input->message = realloc(input->message, n);
+        append_padding(input->message, input->message_size, 56);
+        append_lenght(input->message, 56, input->total_size * BIT_NUM);
+        calculation_procedure(input->message);
+        print_result(input, AA, BB, CC, DD);
+        free(input->message);
+        mode = START;
+        return 0;
+    }
+    else
+    {
+        calculation_procedure(input->message);
+        free(input->message);
+        return 1;
+    }
 }

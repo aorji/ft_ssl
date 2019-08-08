@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/08 15:16:07 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/08 16:47:16 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,19 @@ typedef	struct		s_input
     void            *message;
     size_t          message_size;
     char            *message_name;
+    size_t total_size;
     // void            *mmapedData;
 }					t_input;
 
-int         md5(t_input *);
+// int         md5(t_input *);
+int  md5(t_input *);
 int         sha256(t_input *);
+int        call_hashing_algorithm(t_input *input);
 
 static      int (*hashing_algorithm[])(t_input *) = { &md5, &sha256 };
 
 t_input     *set_input(int , char **);
-void        set_message(t_input *, void *, char *);
+void        set_message(t_input *, void *, char *, int);
 void        set_flag(t_input *, char, int);
 int         get_flag(t_input *, char flag);
 
@@ -76,8 +79,9 @@ void        process_flags(t_input *);
 void        process_stdin_files(t_input *);
 void        read_message_from_stdin(t_input *);
 void        read_message_from_file(t_input *);
+void        read_message_from_string(t_input *, int);
+void print_error(enum cmd_type cmd, char *filename, char *error_str);
 
-void        call_hashing_algorithm(t_input *input);
 // void        print_bitset(uint8_t *, size_t);
 // void        print_xset(uint8_t *, size_t);
 

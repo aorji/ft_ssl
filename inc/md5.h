@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/07/31 17:53:25 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/08 16:22:17 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,17 @@ static const int LEN_SIZE = 8;
 
 static const int BIT_NUM = 8;
 
+enum    hash_mode
+{
+    CONTINUE = 0,
+    START = 1
+};
 
 // void  append_padding_bits(t_list **, size_t, size_t);
 // void  append_lenght(t_list **, size_t, size_t, size_t);
 // void  append_lenght(t_list **, size_t, size_t);
 // void  calculation_procedure(t_list **message);
-void print_result(t_input *input, uint32_t, uint32_t, uint32_t, uint32_t);
+
+void          print_result(t_input *input, uint32_t, uint32_t, uint32_t, uint32_t);
 
 #endif

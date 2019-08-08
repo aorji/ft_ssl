@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/08 15:14:58 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/08 16:24:14 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 // norminette -R CheckForbiddenSourceHeader <filename>
 
-void call_hashing_algorithm(t_input *input)
+int call_hashing_algorithm(t_input *input)
 {
-    (*hashing_algorithm[input->cmd_opts - 1])(input);
+    return (*hashing_algorithm[input->cmd_opts - 1])(input);
 }
 
 int main(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 13:09:57 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/08 14:50:45 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/08 18:31:51 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # include <sys/mman.h>
 # include <sys/stat.h>
 
-# define    BUFSIZE 4
+# define    BUFFSIZE 64
+// # define    BUFSIZE 64
 
 void        read_message_from_stdin(t_input *);
 void        read_message_from_file(t_input *);

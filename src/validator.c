@@ -12,6 +12,20 @@
 
 #include "../inc/ft_ssl.h"
 
+void print_error(enum cmd_type cmd, char *filename, char *error_str)
+{
+    if (cmd == MD5)
+        ft_printf("md5: ");
+    else if (cmd == SHA256)
+        ft_printf("sha256: ");
+    else
+        ft_printf("ft_ssl: ");
+        
+    if (filename)
+        ft_printf("%s: ", filename);
+    ft_printf("%s\n", error_str);
+}
+
 static void cmd_options(t_input *input)
 {
     if (input->error)
@@ -23,7 +37,7 @@ static void cmd_options(t_input *input)
     else
     {
         input->error = INVALIDE_CMD;
-        ft_printf("%s%s%s", "ft_ssl: Error: '", (input->av)[1], "' is an invalid command.\nStandard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
+        print_error(input->cmd_opts, (input->av)[1], "' is an invalid command.\nStandard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
     }
 }
 
