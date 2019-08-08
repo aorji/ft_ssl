@@ -6,30 +6,26 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/01 18:04:45 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/08 15:16:07 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SSL_H
 # define FT_SSL_H
 
-#include "../libft-ft_printf/ft_printf.h"
-#include <fcntl.h>
-#include <errno.h>
-#include <math.h>
+# include "../libft-ft_printf/ft_printf.h"
 
-# define BUFSIZE 512
 # define no_arg_flag_num 4
 
 // typedef long double		t_vector __attribute__((vector_size(sizeof(LD)*3))); 
 
-enum input_type
+enum    input_type
 {
     STDIN = 0,
     FILE_STRING = 1
-}; 
+};
 
-enum error_type 
+enum    error_type
 {
     NO_ERROR = 0,
     NO_CMD = 1,
@@ -37,7 +33,7 @@ enum error_type
     INVALIDE_FLAG = 3
 };
 
-enum cmd_type 
+enum    cmd_type
 {
     NO_TYPE = 0,
     MD5 = 1,
@@ -62,6 +58,7 @@ typedef	struct		s_input
     void            *message;
     size_t          message_size;
     char            *message_name;
+    // void            *mmapedData;
 }					t_input;
 
 int         md5(t_input *);
@@ -70,7 +67,7 @@ int         sha256(t_input *);
 static      int (*hashing_algorithm[])(t_input *) = { &md5, &sha256 };
 
 t_input     *set_input(int , char **);
-void        set_message(t_input *, char *, char *);
+void        set_message(t_input *, void *, char *);
 void        set_flag(t_input *, char, int);
 int         get_flag(t_input *, char flag);
 
@@ -78,9 +75,9 @@ void        validate_input(t_input *);
 void        process_flags(t_input *);
 void        process_stdin_files(t_input *);
 void        read_message_from_stdin(t_input *);
+void        read_message_from_file(t_input *);
 
-void        call_hashing_algorithm(t_input *);
-
+void        call_hashing_algorithm(t_input *input);
 // void        print_bitset(uint8_t *, size_t);
 // void        print_xset(uint8_t *, size_t);
 

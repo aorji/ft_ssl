@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:29:29 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/01 17:21:02 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/08 14:32:00 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // norminette -R CheckForbiddenSourceHeader <filename>
 
-void set_message(t_input *input, char *message, char *message_name)
+void set_message(t_input *input, void *message, char *message_name)
 {
     input->message = ft_strdup(message);
     input->message_name = message_name;
@@ -38,6 +38,7 @@ t_input *set_input(int ac, char **av)
     input->flag->flags_set = (char *)malloc(sizeof(char) * no_arg_flag_num);
     ft_bzero(input->flag->flags_set, no_arg_flag_num);
     input->flag->flags_opt = "pqrs";
+    input->mmapedData = NULL;
     return (input);
 }
 

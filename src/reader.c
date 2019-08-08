@@ -6,11 +6,33 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/01 17:43:11 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/08 15:15:47 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ssl.h"
+#include "../inc/reader.h"
+
+// static void print_error(t_input *input)
+// {
+//     if (input->cmd_opts == 1)
+//         ft_printf("md5: ");
+//     else
+//         ft_printf("sha256: ");
+//     ft_printf("%s: %s\n", (input->av)[input->position], strerror( errno ));
+// }
+
+// static size_t get_filesize(const char* filename)
+// {
+//     struct stat st;
+//     stat(filename, &st);
+//     return st.st_size;
+// }
+static size_t is_dir(const char* filename)
+{
+    struct stat st;
+    stat(filename, &st);
+    return S_ISDIR(st.st_mode);
+}
 
 void read_message_from_stdin(t_input *input)
 {
@@ -35,7 +57,7 @@ void read_message_from_stdin(t_input *input)
     free(resulting_str);
 }
 
-static void read_message_from_file(t_input *input)
+void read_message_from_file(t_input *input)
 {
     char    buf[BUFSIZE + 1];
     size_t  input_size = 0;
@@ -50,6 +72,10 @@ static void read_message_from_file(t_input *input)
         {
             ft_printf("%s: %s: %s", "ft_ssl", (input->av)[input->position], "Error while opening the file\n");
             // input->error = INVALIDE_FILE;
+            continue;
+        }
+        if (is_dir((input->av)[input->position])){
+            ft_printf("%s: %s: %s", "ft_ssl", (input->av)[input->position], "Is a directory\n");
             continue;
         }
         while ( 1 )
@@ -87,13 +113,3 @@ void process_stdin_files(t_input *input)
     if (input->read_from == FILE_STRING)
         read_message_from_file(input);
 }
-
-
-    // int filedesc = open(filename, O_RDONLY);
-
-    // if (filedesc < 0)
-    // {
-    //     ft_printf("%s%s\n", "ft_ssl: Error opening file: ", strerror( errno ));
-    //     input->error = INVALIDE_FILE;
-    //     return input;
-    // }
