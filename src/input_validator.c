@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validator.c                                        :+:      :+:    :+:   */
+/*   input_validator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/01 18:05:55 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 19:57:20 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-void print_error(enum cmd_type cmd, char *name, char *error_str)
+void error_output(enum cmd_type cmd, char *name, char *error_str)
 {
     if (cmd == MD5)
         ft_printf("md5: ");
@@ -36,7 +36,9 @@ static void cmd_options(t_input *input)
     else
     {
         input->error = INVALIDE_CMD;
-        print_error(input->cmd_opts, (input->av)[1], "' is an invalid command.\nStandard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
+        error_output(input->cmd_opts, (input->av)[1], 
+        "' is an invalid command.\nStandard commands:\n\n\
+        Message Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
     }
 }
 

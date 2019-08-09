@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   message_processing.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 15:33:33 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 20:08:19 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void hash_string(t_input *input, char *full_message)
     }
 }
 
-void read_message_from_stdin(t_input *input)
+void process_message_from_stdin(t_input *input)
 {
     char    buf[BUFFSIZE];
     size_t  input_size = 0;
@@ -49,13 +49,14 @@ void read_message_from_stdin(t_input *input)
     ft_strdel(&resulting_str);
 }
 
-void read_message_from_string(t_input *input, int j)
+void process_message_from_string(t_input *input, int j)
 {
     if ((input->av)[input->position][j + 1] == '\0')                        /* example: "-s" "string" */ 
     {
         if (!(input->av)[input->position + 1])
         {
-            print_error(input->cmd_opts, NULL, "option requires an argument -- s\nusage: md5 [-pqrtx] [-s string] [files ...]");
+            error_output(input->cmd_opts, NULL, "option requires an \
+            argument -- s\nusage: md5 [-pqrtx] [-s string] [files ...]");
             input->error = INVALIDE_FLAG;
             return;
         }
@@ -63,10 +64,11 @@ void read_message_from_string(t_input *input, int j)
         hash_string(input, input->av[input->position]);
     }
     else                                                                    /* example: "-sstring" */
-        hash_string(input, ft_strsub(input->av[input->position], j + 1, ft_strlen(input->av[input->position]) - j - 1));
+        hash_string(input, ft_strsub(input->av[input->position],
+        j + 1, ft_strlen(input->av[input->position]) - j - 1));
 }
 
-void read_message_from_file(t_input *input)
+void process_message_from_file(t_input *input)
 {
     char BUFF[BUFFSIZE];
 
@@ -75,7 +77,7 @@ void read_message_from_file(t_input *input)
         input->total_size = get_filesize((input->av)[input->position]);
         int fd = open((input->av)[input->position], O_RDONLY);
 
-        if (validate_file(input, fd))
+        if (validate_file(input, fd))                                       /* return true, if error has occurred */
             continue;
         while (1)
         {
@@ -88,7 +90,7 @@ void read_message_from_file(t_input *input)
             }
             else
             {
-                print_error(input->cmd_opts, (input->av)[input->position], strerror( errno ));
+                error_output(input->cmd_opts, (input->av)[input->position], strerror( errno ));
                 close(fd);
                 continue;
             }
@@ -102,7 +104,7 @@ void process_stdin_files(t_input *input)
     if (input->read_from == STDIN && get_flag(input, 'p'))
         return;
     if(input->read_from == STDIN)
-        read_message_from_stdin(input);
+        process_message_from_stdin(input);
     if (input->read_from == FILE_STRING)
-        read_message_from_file(input);
+        process_message_from_file(input);
 }

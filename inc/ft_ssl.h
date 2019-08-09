@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 15:35:00 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 20:10:04 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 # define FT_SSL_H
 
 # include "../libft-ft_printf/ft_printf.h"
-
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/mman.h>
 # include <sys/stat.h>
 
-#define    BUFFSIZE 64
-#define flags_num 4
+#define BUFFSIZE 64 //DO NOT CHANGE!!!!
+#define FLAG_NUM 4
 
 // typedef long double		t_vector __attribute__((vector_size(sizeof(LD)*3))); 
 
@@ -54,12 +53,12 @@ typedef	struct		s_input
 	enum cmd_type   cmd_opts;
     enum error_type error;
     enum input_type read_from;
-    char    *flags_opt;
-    char    *flags_set;
+    char            *flags_opt;
+    char            *flags_set;
     void            *message;
     size_t          message_size;
     char            *message_name;
-    size_t total_size;
+    size_t          total_size;
 }					t_input;
 
 enum    hash_mode
@@ -70,30 +69,33 @@ enum    hash_mode
 };
 
 enum hash_mode  md5(t_input *input);
-enum hash_mode sha256(t_input *input);
-enum hash_mode call_hashing_algorithm(t_input *input);
+enum hash_mode  sha256(t_input *input);
+enum hash_mode  call_hashing_algorithm(t_input *input);
 
-static      enum hash_mode (*hashing_algorithm[])(t_input *input) = { &md5, &sha256 };
+static enum hash_mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha256 };
 
-t_input *init_input(int ac, char **av);
-void    set_message(t_input *input, void *message, char *message_name, int size);
-void    set_flag(t_input *input, char flag, int i);
-int     get_flag(t_input *input, char c);
+/*  structure_processing.c  */
+t_input         *init_input(int ac, char **av);
+void            clear_input(t_input *input);
+void            set_message(t_input *input, void *message, char *message_name, int size);
+void            set_flag(t_input *input, char flag, int i);
+int             get_flag(t_input *input, char c);
 
-void    validate_input(t_input *input);
-void    print_error(enum cmd_type cmd, char *filename, char *error_str);
-void    process_flags(t_input *input);
+void            validate_input(t_input *input);
+void            error_output(enum cmd_type cmd, char *filename, char *error_str);
 
-void    process_stdin_files(t_input *input);
-void    read_message_from_stdin(t_input *input);
-void    read_message_from_file(t_input *input);
-void    read_message_from_string(t_input *input, int pos);
+/*  flags_processing.c      */
+void            process_flags(t_input *input);
 
-size_t  get_filesize(const char *filename);
-size_t  is_dir(const char *filename);
-int     validate_file(t_input *input, int fd);
+/*  message_processing.c    */
+void            process_stdin_files(t_input *input);
+void            process_message_from_stdin(t_input *input);
+void            process_message_from_file(t_input *input);
+void            process_message_from_string(t_input *input, int pos);
 
-// void        print_bitset(uint8_t *, size_t);
-// void        print_xset(uint8_t *, size_t);
+/*  file_validation.c       */
+size_t          get_filesize(const char *filename);
+size_t          is_dir(const char *filename);
+int             validate_file(t_input *input, int fd);
 
 #endif

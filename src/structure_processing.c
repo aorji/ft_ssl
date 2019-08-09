@@ -1,25 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setters.c                                          :+:      :+:    :+:   */
+/*   structure_processing.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:29:29 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 15:37:08 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 20:05:19 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
-
-// norminette -R CheckForbiddenSourceHeader <filename>
-
-void set_message(t_input *input, void *message, char *message_name, int size)
-{
-    input->message = ft_strdup(message);
-    input->message_name = message_name;
-    input->message_size = size;
-}
 
 t_input *init_input(int ac, char **av)
 {
@@ -34,14 +25,27 @@ t_input *init_input(int ac, char **av)
     input->error = NO_ERROR;
     input->message = NULL;
     input->message_name = NULL;
-    input->flags_set = (char *)malloc(sizeof(char) * flags_num);
-    ft_bzero(input->flags_set, flags_num);
+    input->flags_set = (char *)malloc(sizeof(char) * FLAG_NUM);
+    ft_bzero(input->flags_set, FLAG_NUM);
     input->flags_opt = "pqrs";
     input->total_size = 0;
     return (input);
 }
 
-void set_flag(t_input *input, char flag, int i)                                    /* set 1 insted of 0 in flaf_set array */
+void clear_input(t_input *input)
+{
+    free(input->flags_set);
+    free(input);
+}
+
+void set_message(t_input *input, void *message, char *message_name, int size)
+{
+    input->message = ft_strdup(message);
+    input->message_name = message_name;
+    input->message_size = size;
+}
+
+void set_flag(t_input *input, char flag, int i)
 {
     (input->flags_set)[flag % (input->flags_opt)[0]] = i;
 }

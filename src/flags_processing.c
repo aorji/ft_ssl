@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_flags.c                                    :+:      :+:    :+:   */
+/*   flags_processing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 14:41:54 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 15:36:07 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 20:09:13 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void add_flag(t_input *input)
     char flag = (input->av)[input->position][j];
     while (flag)
     {
-        if (flag < input->flags_opt[0] || flag > input->flags_opt[flags_num - 1])
+        if (flag < input->flags_opt[0] || flag > input->flags_opt[FLAG_NUM - 1])
         {
             ft_printf("%s%c%s\n", "md5: illegal option -- ", flag, "\nusage: md5 [-pqr] [-s string] [files ...]");
             input->error = INVALIDE_FLAG;
@@ -28,12 +28,12 @@ static void add_flag(t_input *input)
         if (flag == 's')
         {
             input->read_from = FILE_STRING;
-            read_message_from_string(input, j);
+            process_message_from_string(input, j);
             return;
         }
         else if (flag == 'p')
         {
-            read_message_from_stdin(input);
+            process_message_from_stdin(input);
         }
         j++;
         flag = (input->av)[input->position][j];

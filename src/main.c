@@ -6,19 +6,11 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 15:36:34 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 19:59:40 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
-
-// norminette -R CheckForbiddenSourceHeader <filename>
-
-static void clear_input(t_input *input)
-{
-    free(input->flags_set);
-    free(input);
-}
 
 enum hash_mode call_hashing_algorithm(t_input *input)
 {

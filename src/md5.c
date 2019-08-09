@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/08 16:26:28 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 19:31:51 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ enum hash_mode md5(t_input *input)
         append_padding(input->message, input->message_size, 56);
         append_lenght(input->message, 56, input->total_size * BIT_NUM);
         calculation_procedure(input->message);
-        print_result(input, AA, BB, CC, DD);
+        md5_output(input, AA, BB, CC, DD);
         free(input->message);
         return mode = FINISH;
     }
