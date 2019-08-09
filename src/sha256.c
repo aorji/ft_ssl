@@ -12,7 +12,7 @@
 
 #include "../inc/ft_ssl.h"
 
-int         sha256(t_input *input)
+enum hash_mode sha256(t_input *input)
 {
     ft_printf("\n----------I AM sha256----------\n");
     ft_listdisp(input->message);

@@ -12,7 +12,7 @@
 
 #include "../inc/ft_ssl.h"
 
-void print_error(enum cmd_type cmd, char *filename, char *error_str)
+void print_error(enum cmd_type cmd, char *name, char *error_str)
 {
     if (cmd == MD5)
         ft_printf("md5: ");
@@ -20,9 +20,8 @@ void print_error(enum cmd_type cmd, char *filename, char *error_str)
         ft_printf("sha256: ");
     else
         ft_printf("ft_ssl: ");
-        
-    if (filename)
-        ft_printf("%s: ", filename);
+    if (name)
+        ft_printf("%s: ", name);
     ft_printf("%s\n", error_str);
 }
 

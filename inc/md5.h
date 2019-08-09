@@ -94,17 +94,6 @@ static const int LEN_SIZE = 8;
 
 static const int BIT_NUM = 8;
 
-enum    hash_mode
-{
-    CONTINUE = 0,
-    START = 1
-};
-
-// void  append_padding_bits(t_list **, size_t, size_t);
-// void  append_lenght(t_list **, size_t, size_t, size_t);
-// void  append_lenght(t_list **, size_t, size_t);
-// void  calculation_procedure(t_list **message);
-
 void          print_result(t_input *input, uint32_t, uint32_t, uint32_t, uint32_t);
 
 #endif

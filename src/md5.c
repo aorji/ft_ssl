@@ -12,11 +12,13 @@
 
 #include "../inc/md5.h"
 
-// static int padding_size(size_t message_size)
-// {
-//     int sub = message_size % n;
-//     return ( sub < a ) ? (a - sub) : (a + n - sub);
-// }
+static void init_magic_num()
+{
+    AA = 0x67452301;
+    BB = 0xefcdab89;
+    CC = 0x98badcfe;
+    DD = 0x10325476;
+}
 
 /*
  * step 1
@@ -43,24 +45,11 @@ static void append_lenght(void *message, size_t from, size_t len)
     }
 }
     
-static void init_magic_num()
-{
-    AA = 0x67452301;
-    BB = 0xefcdab89;
-    CC = 0x98badcfe;
-    DD = 0x10325476;
-}
-
 /*
  * step 3
  */
 static void calculation_procedure(void *message)
 {
-    // uint32_t *X;                                    /* storage for nth block of 16 32-bit words */
-    // size_t N = message_size / 4;                    /* num of 32 bit words in message. should me multip of 16 */
-    // for (size_t offset = 0; offset < 16; offset += 16)
-    // {
-        // X = ((uint32_t *)message) + offset;
         uint32_t *X = ((uint32_t *)message);
         uint32_t A = AA;
         uint32_t B = BB;
@@ -86,18 +75,16 @@ static void calculation_procedure(void *message)
         BB += B;
         CC += C;
         DD += D;
-    // }
 }
 
 /*
  * entry piont
  */
-int         md5(t_input *input)
+enum hash_mode md5(t_input *input)
 {
     static enum hash_mode mode = START;
-    if (mode == START)
-        init_magic_num();
-    mode = CONTINUE;
+
+    (mode == START) ? init_magic_num() : 0;
     
     if (input->message_size < n)
     {
@@ -107,13 +94,12 @@ int         md5(t_input *input)
         calculation_procedure(input->message);
         print_result(input, AA, BB, CC, DD);
         free(input->message);
-        mode = START;
-        return 0;
+        return mode = FINISH;
     }
     else
     {
         calculation_procedure(input->message);
         free(input->message);
-        return 1;
+        return mode = CONTINUE;
     }
 }

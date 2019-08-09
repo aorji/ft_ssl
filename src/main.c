@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/08 16:24:14 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 15:36:34 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 
 // norminette -R CheckForbiddenSourceHeader <filename>
 
-int call_hashing_algorithm(t_input *input)
+static void clear_input(t_input *input)
+{
+    free(input->flags_set);
+    free(input);
+}
+
+enum hash_mode call_hashing_algorithm(t_input *input)
 {
     return (*hashing_algorithm[input->cmd_opts - 1])(input);
 }
 
 int main(int ac, char **av)
 {
-    t_input *input = set_input(ac, av);
+    t_input *input = init_input(ac, av);
 
     validate_input(input);
     process_flags(input);
@@ -30,7 +36,8 @@ int main(int ac, char **av)
         return 0;
     
     process_stdin_files(input);
-    //free input
+
+    clear_input(input);
     // system ("leaks a.out");
     return 0;
 }

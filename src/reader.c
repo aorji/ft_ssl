@@ -6,24 +6,11 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/08 18:51:59 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 15:33:33 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/reader.h"
-
-static size_t get_filesize(const char* filename)
-{
-    struct stat st;
-    stat(filename, &st);
-    return st.st_size;
-}
-static size_t is_dir(const char* filename)
-{
-    struct stat st;
-    stat(filename, &st);
-    return S_ISDIR(st.st_mode);
-}
+#include "../inc/ft_ssl.h"
 
 static void hash_string(t_input *input, char *full_message)
 {
@@ -34,13 +21,13 @@ static void hash_string(t_input *input, char *full_message)
         input->total_size = ft_strlen(full_message);
         part_message = full_message + start;
         set_message(input, part_message, full_message, input->total_size - start);
-        if (!call_hashing_algorithm(input))
+        if (call_hashing_algorithm(input) == FINISH)
             break;
         start += 64;
     }
 }
 
-void read_message_from_stdin(t_input *input __unused)
+void read_message_from_stdin(t_input *input)
 {
     char    buf[BUFFSIZE];
     size_t  input_size = 0;
@@ -59,6 +46,7 @@ void read_message_from_stdin(t_input *input __unused)
         break;
     }
     hash_string(input, resulting_str);
+    ft_strdel(&resulting_str);
 }
 
 void read_message_from_string(t_input *input, int j)
@@ -87,31 +75,23 @@ void read_message_from_file(t_input *input)
         input->total_size = get_filesize((input->av)[input->position]);
         int fd = open((input->av)[input->position], O_RDONLY);
 
-        if ( fd == -1 )
-        {
-            print_error(input->cmd_opts, (input->av)[input->position], strerror( errno ));
+        if (validate_file(input, fd))
             continue;
-        }
-        if (is_dir((input->av)[input->position]))
-        {
-            print_error(input->cmd_opts, (input->av)[input->position], "Is a directory");
-            continue;
-        }
         while (1)
         {
             int read_size = read(fd, BUFF, BUFFSIZE);
             if (read_size != -1)
             {
                 set_message(input, BUFF, (input->av)[input->position], read_size);
-                if (!call_hashing_algorithm(input))
+                if (call_hashing_algorithm(input) == FINISH)
                     break;
             }
             else
             {
                 print_error(input->cmd_opts, (input->av)[input->position], strerror( errno ));
+                close(fd);
                 continue;
             }
-            
         }
         close(fd);
     }
