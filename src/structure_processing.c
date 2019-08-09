@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:29:29 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 20:05:19 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 21:48:49 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ t_input *init_input(int ac, char **av)
     return (input);
 }
 
-void clear_input(t_input *input)
+void clear_input(t_input *input __unused)
 {
-    free(input->flags_set);
-    free(input);
+    // free(input->flags_set);
+    // free(input);
 }
 
 void set_message(t_input *input, void *message, char *message_name, int size)

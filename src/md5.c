@@ -6,11 +6,17 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 19:31:51 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/09 21:47:06 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/md5.h"
+
+// static int ft_padding_len(size_t message_len)
+// {
+//     int sub = message_len % n;
+//     return ( sub < a ) ? (a - sub) : (b - sub);
+// }
 
 static void init_magic_num()
 {
@@ -88,9 +94,22 @@ enum hash_mode md5(t_input *input)
     
     if (input->message_size < n)
     {
+        if (input->message_size >= a)
+        {
+            char *m = input->message;
+            m = realloc(m, b);
+            append_padding(m, input->message_size, b);
+            append_lenght(m, b, input->total_size * BIT_NUM);
+            calculation_procedure(m);
+            m += 64;
+            calculation_procedure(m);
+            md5_output(input, AA, BB, CC, DD);
+            free(input->message);
+            return mode = FINISH;
+        }
         input->message = realloc(input->message, n);
-        append_padding(input->message, input->message_size, 56);
-        append_lenght(input->message, 56, input->total_size * BIT_NUM);
+        append_padding(input->message, input->message_size, a);
+        append_lenght(input->message, a, input->total_size * BIT_NUM);
         calculation_procedure(input->message);
         md5_output(input, AA, BB, CC, DD);
         free(input->message);
