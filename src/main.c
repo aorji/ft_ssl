@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 19:59:40 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/10 21:03:00 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int main(int ac, char **av)
         return 0;
     
     process_stdin_files(input);
-
-    clear_input(input);
+    free(input);
     // system ("leaks a.out");
     return 0;
 }

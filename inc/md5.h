@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 21:53:18 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/10 20:24:46 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ static uint32_t DD = 0;
  */
 static const int  n = 64;
 static const int  a = 56;
-static const int  b = 120;
 
 /*
  * A 64-bit representation of the length of the message before the padding bits were added

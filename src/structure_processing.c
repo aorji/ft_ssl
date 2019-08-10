@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:29:29 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 21:48:49 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/10 20:46:44 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,16 @@ t_input *init_input(int ac, char **av)
     input->position = 2;
     input->cmd_opts = NO_TYPE;
     input->error = NO_ERROR;
-    input->message = NULL;
     input->message_name = NULL;
-    input->flags_set = (char *)malloc(sizeof(char) * FLAG_NUM);
-    ft_bzero(input->flags_set, FLAG_NUM);
-    input->flags_opt = "pqrs";
+    reset_arr(input->flags_set, "", FLAG_NUM, 0);
+    reset_arr(input->flags_opt, "pqrs", FLAG_NUM, FLAG_NUM);
     input->total_size = 0;
     return (input);
 }
 
-void clear_input(t_input *input __unused)
+void set_message(t_input *input, char *message, char *message_name, int size)
 {
-    // free(input->flags_set);
-    // free(input);
-}
-
-void set_message(t_input *input, void *message, char *message_name, int size)
-{
-    input->message = ft_strdup(message);
+    reset_arr(input->message, message, MAX_HASH_MESSAGE_LEN, size);
     input->message_name = message_name;
     input->message_size = size;
 }
@@ -50,9 +42,22 @@ void set_flag(t_input *input, char flag, int i)
     (input->flags_set)[flag % (input->flags_opt)[0]] = i;
 }
 
-int get_flag(t_input *input, char c)
+uint8_t get_flag(t_input *input, char c)
 {
-    if ((input->flags_set)[c % (input->flags_opt)[0]] == 1)
-        return 1;
-    return 0;
+    return (input->flags_set)[c % (input->flags_opt)[0]];
+}
+
+void reset_arr(uint8_t dst[], char src[], int dstlen, int srclen)
+{
+    int i = 0;
+    while(i < srclen)
+    {
+        dst[i] = src[i];
+        i++;
+    }
+    while(i < dstlen)
+    {
+        dst[i] = 0;
+        i++;
+    }
 }

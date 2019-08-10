@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 20:10:04 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/10 21:27:01 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #define BUFFSIZE 64 //DO NOT CHANGE!!!!
 #define FLAG_NUM 4
-
+#define MAX_HASH_MESSAGE_LEN 120
 // typedef long double		t_vector __attribute__((vector_size(sizeof(LD)*3))); 
 
 enum    input_type
@@ -49,15 +49,19 @@ typedef	struct		s_input
 {
     int             ac;
     char            **av;
+
     int             position;
 	enum cmd_type   cmd_opts;
     enum error_type error;
     enum input_type read_from;
-    char            *flags_opt;
-    char            *flags_set;
-    void            *message;
+
+    uint8_t         flags_opt[FLAG_NUM];
+    uint8_t         flags_set[FLAG_NUM];
+
+    uint8_t         message[MAX_HASH_MESSAGE_LEN];
     size_t          message_size;
     char            *message_name;
+
     size_t          total_size;
 }					t_input;
 
@@ -68,6 +72,8 @@ enum    hash_mode
     FINISH = 1
 };
 
+void            reset_arr(uint8_t dst[], char src[], int dstlen, int srclen);
+
 enum hash_mode  md5(t_input *input);
 enum hash_mode  sha256(t_input *input);
 enum hash_mode  call_hashing_algorithm(t_input *input);
@@ -76,10 +82,9 @@ static enum hash_mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha256 
 
 /*  structure_processing.c  */
 t_input         *init_input(int ac, char **av);
-void            clear_input(t_input *input);
-void            set_message(t_input *input, void *message, char *message_name, int size);
+void            set_message(t_input *input, char *message, char *message_name, int size);
 void            set_flag(t_input *input, char flag, int i);
-int             get_flag(t_input *input, char c);
+uint8_t             get_flag(t_input *input, char c);
 
 void            validate_input(t_input *input);
 void            error_output(enum cmd_type cmd, char *filename, char *error_str);

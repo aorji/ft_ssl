@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 21:47:06 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/10 20:40:40 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ static void append_lenght(void *message, size_t from, size_t len)
 /*
  * step 3
  */
-static void calculation_procedure(void *message)
+static void calculation_procedure(void *message, int times)
 {
-        uint32_t *X = ((uint32_t *)message);
+    int offset = 0;
+    while ( times-- )
+    {
+        uint32_t *X = ((uint32_t *)(message + offset));
         uint32_t A = AA;
         uint32_t B = BB;
         uint32_t C = CC;
@@ -81,6 +84,8 @@ static void calculation_procedure(void *message)
         BB += B;
         CC += C;
         DD += D;
+        offset += 64;
+    }
 }
 
 /*
@@ -96,29 +101,21 @@ enum hash_mode md5(t_input *input)
     {
         if (input->message_size >= a)
         {
-            char *m = input->message;
-            m = realloc(m, b);
-            append_padding(m, input->message_size, b);
-            append_lenght(m, b, input->total_size * BIT_NUM);
-            calculation_procedure(m);
-            m += 64;
-            calculation_procedure(m);
+            append_padding(input->message, input->message_size, MAX_HASH_MESSAGE_LEN);
+            append_lenght(input->message, MAX_HASH_MESSAGE_LEN, input->total_size * BIT_NUM);
+            calculation_procedure(input->message, 2);
             md5_output(input, AA, BB, CC, DD);
-            free(input->message);
             return mode = FINISH;
         }
-        input->message = realloc(input->message, n);
         append_padding(input->message, input->message_size, a);
         append_lenght(input->message, a, input->total_size * BIT_NUM);
-        calculation_procedure(input->message);
+        calculation_procedure(input->message, 1);
         md5_output(input, AA, BB, CC, DD);
-        free(input->message);
         return mode = FINISH;
     }
     else
     {
-        calculation_procedure(input->message);
-        free(input->message);
+        calculation_procedure(input->message, 1);
         return mode = CONTINUE;
     }
 }

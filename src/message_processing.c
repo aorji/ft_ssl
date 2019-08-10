@@ -6,19 +6,19 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/09 20:08:19 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/10 21:19:58 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-static void hash_string(t_input *input, char *full_message)
+static void hash_string(t_input *input, char *full_message, size_t size)
 {
     char *part_message = NULL;
     int start = 0;
     while (1)
     {
-        input->total_size = ft_strlen(full_message);
+        input->total_size = size;
         part_message = full_message + start;
         set_message(input, part_message, full_message, input->total_size - start);
         if (call_hashing_algorithm(input) == FINISH)
@@ -36,17 +36,19 @@ void process_message_from_stdin(t_input *input)
     
     while ( 1 )
     {
-        if (fgets(buf, BUFFSIZE, stdin))
+        int read_size = read(0, buf, BUFFSIZE);
+        if (read_size > 0)
         {
-            input_size += ft_strlen(buf);
-            resulting_str = (char *)realloc(resulting_str, input_size); 
+            input_size += read_size;
+            resulting_str = (char *)realloc(resulting_str, input_size);
             ft_strcat(resulting_str, buf);
             continue;
         }
         break;
     }
-    hash_string(input, resulting_str);
-    ft_strdel(&resulting_str);
+    hash_string(input, resulting_str, input_size);
+    // ft_strdel(&resulting_str);
+    // free(resulting_str); breakpoint in malloc_error_break
 }
 
 void process_message_from_string(t_input *input, int j)
@@ -61,11 +63,14 @@ void process_message_from_string(t_input *input, int j)
             return;
         }
         (input->position)++;
-        hash_string(input, input->av[input->position]);
+        hash_string(input, input->av[input->position], ft_strlen(input->av[input->position]));
     }
     else                                                                    /* example: "-sstring" */
-        hash_string(input, ft_strsub(input->av[input->position],
-        j + 1, ft_strlen(input->av[input->position]) - j - 1));
+    {
+        char *message = ft_strsub(input->av[input->position], j + 1, ft_strlen(input->av[input->position]) - j - 1);
+        hash_string(input, message, ft_strlen(message));
+        free(message);
+    }  
 }
 
 void process_message_from_file(t_input *input)
@@ -101,7 +106,7 @@ void process_message_from_file(t_input *input)
 
 void process_stdin_files(t_input *input)
 {
-    if (input->read_from == STDIN && get_flag(input, 'p'))
+    if (input->read_from == STDIN && get_flag(input, 'p') == 2)
         return;
     if(input->read_from == STDIN)
         process_message_from_stdin(input);
