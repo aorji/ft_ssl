@@ -6,17 +6,11 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 14:53:07 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/12 21:01:31 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/md5.h"
-
-// static int ft_padding_len(size_t message_len)
-// {
-//     int sub = message_len % n;
-//     return ( sub < a ) ? (a - sub) : (b - sub);
-// }
 
 static void init_magic_num()
 {
