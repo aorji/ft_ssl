@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/10 20:40:40 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/12 14:53:07 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,8 @@ static void calculation_procedure(void *message, int times)
 enum hash_mode md5(t_input *input)
 {
     static enum hash_mode mode = START;
-
     (mode == START) ? init_magic_num() : 0;
-    
+
     if (input->message_size < n)
     {
         if (input->message_size >= a)

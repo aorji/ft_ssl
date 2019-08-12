@@ -6,11 +6,36 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/10 21:19:58 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/12 15:02:51 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
+
+void process_message_from_stdin(t_input *input __unused)
+{
+    char    BUFF[BUFFSIZE];
+    while ( 1 )
+    {
+        int read_size = read(0, BUFF, BUFFSIZE);
+        if (read_size != -1)
+        {
+            if (get_flag(input, 'p') == 1)
+                write(1, BUFF, read_size);
+            input->total_size += read_size;
+            set_message(input, BUFF, NULL, read_size);
+            if (call_hashing_algorithm(input) == FINISH)
+                break;
+        }
+        else
+        {
+            error_output(input->cmd_opts, "STDIN", strerror( errno ));
+            break;
+        }
+    }
+    if (get_flag(input, 'p') == 1)
+        set_flag(input, 'p', 2);
+}
 
 static void hash_string(t_input *input, char *full_message, size_t size)
 {
@@ -25,30 +50,6 @@ static void hash_string(t_input *input, char *full_message, size_t size)
             break;
         start += 64;
     }
-}
-
-void process_message_from_stdin(t_input *input)
-{
-    char    buf[BUFFSIZE];
-    size_t  input_size = 0;
-    char    *resulting_str = (char *)malloc(sizeof(char));
-    resulting_str[0] = '\0';
-    
-    while ( 1 )
-    {
-        int read_size = read(0, buf, BUFFSIZE);
-        if (read_size > 0)
-        {
-            input_size += read_size;
-            resulting_str = (char *)realloc(resulting_str, input_size);
-            ft_strcat(resulting_str, buf);
-            continue;
-        }
-        break;
-    }
-    hash_string(input, resulting_str, input_size);
-    // ft_strdel(&resulting_str);
-    // free(resulting_str); breakpoint in malloc_error_break
 }
 
 void process_message_from_string(t_input *input, int j)

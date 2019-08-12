@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:19:47 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/10 21:24:41 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/12 15:00:12 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,7 @@ static void after_checksum(t_input *input)
 
 static void before_checksum(t_input *input)
 {
-    if (get_flag(input, 'p') == 1)
-    {
-        ft_printf("%s", input->message_name);
-        set_flag(input, 'p', 2);
-    }
-    else if (!get_flag(input, 'q') && !get_flag(input, 'r'))
+    if (!get_flag(input, 'q') && !get_flag(input, 'r'))
     {
         if (get_flag(input, 's'))
         {
@@ -47,7 +42,7 @@ static void before_checksum(t_input *input)
 
 void md5_output(t_input *input, uint32_t A, uint32_t B, uint32_t C, uint32_t D)
 {
-    before_checksum(input);
+    input->read_from == FILE_STRING ? before_checksum(input) : 0;
     int i = 16;
     while(i--)
     {
@@ -57,6 +52,6 @@ void md5_output(t_input *input, uint32_t A, uint32_t B, uint32_t C, uint32_t D)
         else if (A == 0 && i <= 8) A = C;
         else if (A == 0 && i <= 12) A = B;
     }
-    after_checksum(input);
+    input->read_from == FILE_STRING ? after_checksum(input) : 0;
     ft_printf("\n");
 }
