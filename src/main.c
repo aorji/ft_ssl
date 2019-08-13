@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 21:17:05 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/13 14:01:04 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int				main(int ac, char **av)
 	if (input->error)
 		return (0);
 	process_stdin_files(input);
-	// free(input);
-	system ("leaks ft_ssl");
+	// system ("leaks ft_ssl");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 21:01:31 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/13 14:04:22 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ enum hash_mode md5(t_input *input)
 {
     static enum hash_mode mode = START;
     (mode == START) ? init_magic_num() : 0;
-
     if (input->message_size < n)
     {
         if (input->message_size >= a)

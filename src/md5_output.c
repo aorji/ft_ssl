@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:19:47 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 21:12:01 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/13 13:58:29 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void after_checksum(t_input *input)
 {
-    if (!get_flag(input, 'q') && get_flag(input, 'r'))
+    if (!get_flag(input, 'p') && !get_flag(input, 'q') && get_flag(input, 'r'))
     {
         if (get_flag(input, 's'))
         {
@@ -28,7 +28,7 @@ static void after_checksum(t_input *input)
 
 static void before_checksum(t_input *input)
 {
-    if (!get_flag(input, 'q') && !get_flag(input, 'r'))
+    if (!get_flag(input, 'p') && !get_flag(input, 'q') && !get_flag(input, 'r'))
     {
         if (get_flag(input, 's'))
         {
@@ -42,7 +42,7 @@ static void before_checksum(t_input *input)
 
 void md5_output(t_input *input, uint32_t A, uint32_t B, uint32_t C, uint32_t D)
 {
-    input->read_from == FILE_STRING ? before_checksum(input) : 0;
+    before_checksum(input);
     int i = 16;
     while(i--)
     {
@@ -52,6 +52,6 @@ void md5_output(t_input *input, uint32_t A, uint32_t B, uint32_t C, uint32_t D)
         else if (i == 8) A = C;
         else if (i == 12) A = B;
     }
-    input->read_from == FILE_STRING ? after_checksum(input) : 0;
+    after_checksum(input);
     ft_printf("\n");
 }

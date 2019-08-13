@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 21:17:58 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/13 14:08:28 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,11 @@ void process_message_from_stdin(t_input *input)
 	char    *resulting_str;
 	char    *tmp;
 	
-	resulting_str = (char *)malloc(sizeof(char));
 	if (visited == 1)
-	{
-		ft_strdel(&resulting_str);
 		return ;
-	}
+	resulting_str = (char *)malloc(sizeof(char));
 	visited = 1;
+	input->total_size = 0;
 	while ( 1 )
 	{
 		int read_size = read(0, BUFF, BUFFSIZE);
