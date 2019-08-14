@@ -6,13 +6,13 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 14:41:54 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 15:44:56 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/14 19:27:58 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-static char		*g_usage = "\nusage: md5 [-pqr] [-s string] [files ...]";
+// static char		*g_usage = "\nusage: md5 [-pqr] [-s string] [files ...]";
 
 static void		add_flag(t_input *input)
 {
@@ -25,7 +25,9 @@ static void		add_flag(t_input *input)
 	{
 		if (flag < input->flags_opt[0] || flag > input->flags_opt[FLAG_NUM - 1])
 		{
-			ft_printf("%s%c%s\n", "md5: illegal option -- ", flag, g_usage);
+			write(2, "md5: illegal option -- ", 23);
+			write(2, &flag, 1);
+			write(2, "\nusage: md5 [-pqr] [-s string] [files ...]\n", 44);
 			input->error = INVALIDE_FLAG;
 			return ;
 		}

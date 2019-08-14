@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 15:47:40 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/14 19:33:56 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 void		error_output(enum cmd_type cmd, char *name, char *error_str)
 {
 	if (cmd == MD5)
-		ft_printf("md5: ");
+		write(2, "md5: ", 5);
 	else if (cmd == SHA256)
-		ft_printf("sha256: ");
+		write(2, "sha256: ", 8);
 	else
-		ft_printf("ft_ssl: ");
+		write(2, "ft_ssl: ", 8);
 	if (name)
-		ft_printf("%s: ", name);
-	ft_printf("%s\n", error_str);
+		write(2, name, ft_strlen(name));
+	write(2, error_str, ft_strlen(error_str));
+	write(2, "\n", 1);
 }
 
 static void	cmd_options(t_input *input)
@@ -37,8 +38,8 @@ static void	cmd_options(t_input *input)
 	{
 		input->error = INVALIDE_CMD;
 		error_output(input->cmd_opts, (input->av)[1],
-		"' is an invalid command.\nStandard commands:\n\n\
-		Message Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
+		" is an invalid command.\nStandard commands:\n\n\
+Message Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
 	}
 }
 
