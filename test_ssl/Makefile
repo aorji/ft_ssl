@@ -6,11 +6,11 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/08/13 16:09:48 by aorji            ###   ########.fr        #
+#    Updated: 2019/08/14 17:04:47 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	ft_ssl
+NAME	=	test_ssl
 
 OBJ_DIR =   ./obj/
 SRC_DIR =   ./src/
@@ -20,9 +20,7 @@ LIB_DIR	=	./lib/
 CC      =	gcc
 FLAGS   =   -Wall -Wextra -Werror --debug
 
-SRC     =   main.c input_validator.c message_processing.c md5_output.c flags_processing.c structure_processing.c	file_validation.c \
-			md5.c																	\
-			sha256.c  
+SRC     =   main.c
 OBJ     =   $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 INC		=	$(INC_DIR)
 PRNTF	=	libft-ft_printf/libftprintf.a
@@ -32,14 +30,16 @@ PRNTF	=	libft-ft_printf/libftprintf.a
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)	$(PRNTF) -I $(INC)
+	$(CC) $(OBJ) -o $(NAME)	../$(PRNTF) -I $(INC)
+	cd .. && make re
+	cp ../ft_ssl .
 	echo "\033[32m[ ✔ ] "$(NAME) created" \033[0m"
 
 $(OBJ): $(LIB_DIR) $(OBJ_DIR)
 
 $(LIB_DIR):
 	mkdir $(LIB_DIR)
-	make -C ./libft-ft_printf && cp $(PRNTF) $(LIB_DIR)
+	make -C ../libft-ft_printf && cp ../$(PRNTF) $(LIB_DIR)
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
@@ -53,13 +53,14 @@ re:
 	make
 
 clean:
-	make clean -C ./libft-ft_printf
+	make clean -C ../libft-ft_printf
+	rm -f ft_ssl
 	rm -f $(OBJ)
 	echo "\033[31m[ × ] "$(OBJ) removed" \033[0m"
 
 fclean: clean
-	make fclean -C ./libft-ft_printf
+	make fclean -C ../libft-ft_printf
 	rm -f $(NAME)
 	rm -rf $(OBJ_DIR)
 	rm -rf $(LIB_DIR)
-	echo "\033[31m[ × ] "$(NAME) and $(PRNTF) removed" \033[0m"
+	echo "\033[31m[ × ] "$(NAME) and ../$(PRNTF) removed" \033[0m"
