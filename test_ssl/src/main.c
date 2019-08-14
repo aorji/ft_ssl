@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 14:27:03 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/14 17:10:04 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/14 21:00:59 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,27 +89,36 @@ static void run_test(char *cmd)
 		EXIT("Faild to create pipe");
 	
 	if (validate_result(first, second))
-		ft_printf("[ OK ]	");
+		ft_printf("\033[32m[ ✔ ]\033[0m	");
 	else
-		ft_printf("[ KO ]	");
+		ft_printf("\033[31m[ × ]\033[0m	");
 
 	pclose(first);
 	pclose(second);
 
 }
 
-int main(void)
+int main(int ac, char **av)
 {
 	int i = 0;
 	int test_cases_num = sizeof(test_cases)/sizeof(test_cases[0]);
 	int param_num = sizeof(test_cases[0])/sizeof(test_cases[0][0]);
 
+	if (ac == 2)
+		i = ft_atoi(av[1]) - 1;
+	else if (ac < 2)
+	{
+		ft_printf("%s %d %s\n", "You have available", test_cases_num, "test cases");
+		ft_printf("%s",\
+		"usage: ./test_ssl <test num from which to start>\n");
+		return 0;
+	}
 	while (i < test_cases_num)
 	{
 		char *test_cmd = njoin(i, param_num);
 		run_test(test_cmd);
 		ft_strdel(&test_cmd);
-		ft_printf("#%d\n", i);
+		ft_printf("#%d\n", i + 1);
 		i++;
 	}
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:19:47 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/14 17:05:54 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/14 19:56:20 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void after_checksum(t_input *input)
     {
         if (get_flag(input, 's'))
         {
-            ft_printf(" \"%s\" ", input->message_name);;
+            ft_printf(" \"%s\"", input->message_name);;
             set_flag(input, 's', 0);   
         }
         else
-            ft_printf(" %s ", input->message_name);
+            ft_printf(" %s", input->message_name);
     }
 }
 

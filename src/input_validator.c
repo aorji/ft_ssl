@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/14 19:33:56 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/14 19:47:53 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void		error_output(enum cmd_type cmd, char *name, char *error_str)
 	else
 		write(2, "ft_ssl: ", 8);
 	if (name)
+	{
 		write(2, name, ft_strlen(name));
+		write(2, ": ", 2);
+	}
 	write(2, error_str, ft_strlen(error_str));
 	write(2, "\n", 1);
 }
