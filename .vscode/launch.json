@@ -16,15 +16,15 @@
             "cwd": "${workspaceFolder}",
             // "environment": [],
             // "externalConsole": true,
-            "linux": {
-                "MIMode": "gdb"
-            },
-            "osx": {
-                "MIMode": "lldb"
-            },
-            "windows": {
-                "MIMode": "gdb"
-            }
+            // "linux": {
+            //     "MIMode": "gdb"
+            // },
+            // "osx": {
+            //     "MIMode": "lldb"
+            // },
+            // "windows": {
+            //     "MIMode": "gdb"
+            // }
         }
     ]
 }

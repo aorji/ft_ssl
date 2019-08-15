@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/08/13 16:09:48 by aorji            ###   ########.fr        #
+#    Updated: 2019/08/15 15:30:41 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,11 @@ LIB_DIR	=	./lib/
 CC      =	gcc
 FLAGS   =   -Wall -Wextra -Werror --debug
 
-SRC     =   main.c input_validator.c message_processing.c md5_output.c flags_processing.c structure_processing.c	file_validation.c \
-			md5.c																	\
-			sha256.c  
+SRC     =   main.c															\
+			input_validator.c file_validation.c								\
+			message_processing.c flags_processing.c structure_processing.c	\
+			md5.c md5_output.c												\
+			sha256.c  sha256_output.c
 OBJ     =   $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 INC		=	$(INC_DIR)
 PRNTF	=	libft-ft_printf/libftprintf.a
