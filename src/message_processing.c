@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/15 12:40:02 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/16 20:35:04 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void process_message_from_string(t_input *input, int j)
 		if (!(input->av)[input->position + 1])
 		{
 			error_output(input->cmd_opts, NULL, "option requires an \
-			argument -- s\nusage: md5 [-pqrtx] [-s string] [files ...]");
+argument -- s\nusage: md5 [-pqrtx] [-s string] [files ...]");
 			input->error = INVALIDE_FLAG;
 			return;
 		}

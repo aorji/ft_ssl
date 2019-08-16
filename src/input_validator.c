@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/14 19:47:53 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/16 19:32:31 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	param_num(t_input *input)
 	{
 		input->error = NO_CMD;
 		ft_printf("%s",\
-		"usage: ft_ssl command [command opts] [command args]\n");
+"usage: ft_ssl command [command opts] [command args]\n");
 	}
 }
 
