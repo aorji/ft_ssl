@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 12:40:57 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 14:03:09 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/16 14:21:40 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ static const int LEN_SIZE = 8;
 
 static const int BIT_NUM = 8;
 
-void sha256_output(t_input *input, uint32_t H0, uint32_t H1, uint32_t H2, uint32_t H3,\
- uint32_t H4, uint32_t H5, uint32_t H6, uint32_t H7);
+uint32_t lit_to_bigendian(uint32_t word);
+
+void sha256_output(t_input *input, uint32_t H[]);
 
 #endif

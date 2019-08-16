@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:49:01 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 14:02:37 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/16 14:12:39 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,13 @@ enum hash_mode sha256(t_input *input)
             append_padding(input->message, input->message_size, MAX_HASH_MESSAGE_LEN);
             append_lenght(input->message, MAX_HASH_MESSAGE_LEN, input->total_size * BIT_NUM);
             calculation_procedure(input->message, 2);
-            sha256_output(input, lit_to_bigendian(H[0]), lit_to_bigendian(H[1]), lit_to_bigendian(H[2]), lit_to_bigendian(H[3]), lit_to_bigendian(H[4]), lit_to_bigendian(H[5]), lit_to_bigendian(H[6]), lit_to_bigendian(H[7]));
+            sha256_output(input, H);
             return mode = FINISH;
         }
         append_padding(input->message, input->message_size, a);
         append_lenght(input->message, a, input->total_size * BIT_NUM);
         calculation_procedure(input->message, 1);
-        sha256_output(input, lit_to_bigendian(H[0]), lit_to_bigendian(H[1]), lit_to_bigendian(H[2]), lit_to_bigendian(H[3]), lit_to_bigendian(H[4]), lit_to_bigendian(H[5]), lit_to_bigendian(H[6]), lit_to_bigendian(H[7]));
+        sha256_output(input, H);
         return mode = FINISH;
     }
     else

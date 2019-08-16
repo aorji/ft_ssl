@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/13 14:04:22 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/16 14:13:58 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void init_magic_num()
 {
-    AA = 0x67452301;
-    BB = 0xefcdab89;
-    CC = 0x98badcfe;
-    DD = 0x10325476;
+    H[0] = 0x67452301;
+    H[1] = 0xefcdab89;
+    H[2] = 0x98badcfe;
+    H[3] = 0x10325476;
 }
 
 /*
@@ -54,30 +54,30 @@ static void calculation_procedure(void *message, int times)
     while ( times-- )
     {
         uint32_t *X = ((uint32_t *)(message + offset));
-        uint32_t A = AA;
-        uint32_t B = BB;
-        uint32_t C = CC;
-        uint32_t D = DD;
+        HH[0] = H[0];
+        HH[1] = H[1];
+        HH[2] = H[2];
+        HH[3] = H[3];
         for (int j = 0; j < 64; ++j)
         {
             if (j < 16)
-                A += F(B, C, D);
+                HH[0] += F(HH[1], HH[2], HH[3]);
             else if (j < 32)
-                A += G(B, C, D);
+                HH[0] += G(HH[1], HH[2], HH[3]);
             else if (j < 48)
-                A += H(B, C, D);
+                HH[0] += H(HH[1], HH[2], HH[3]);
             else
-                A += I(B, C, D);
-            uint32_t tmp = A + T[j] + X[x[j]];
-            A = D;
-            D = C;
-            C = B;
-            B = B + ROTATE_LEFT(tmp, s[j]);
+                HH[0] += I(HH[1], HH[2], HH[3]);
+            uint32_t tmp = HH[0] + T[j] + X[x[j]];
+            HH[0] = HH[3];
+            HH[3] = HH[2];
+            HH[2] = HH[1];
+            HH[1] = HH[1] + ROTATE_LEFT(tmp, s[j]);
         }
-        AA += A;
-        BB += B;
-        CC += C;
-        DD += D;
+        H[0] += HH[0];
+        H[1] += HH[1];
+        H[2] += HH[2];
+        H[3] += HH[3];
         offset += 64;
     }
 }
@@ -96,13 +96,13 @@ enum hash_mode md5(t_input *input)
             append_padding(input->message, input->message_size, MAX_HASH_MESSAGE_LEN);
             append_lenght(input->message, MAX_HASH_MESSAGE_LEN, input->total_size * BIT_NUM);
             calculation_procedure(input->message, 2);
-            md5_output(input, AA, BB, CC, DD);
+            md5_output(input, H);
             return mode = FINISH;
         }
         append_padding(input->message, input->message_size, a);
         append_lenght(input->message, a, input->total_size * BIT_NUM);
         calculation_procedure(input->message, 1);
-        md5_output(input, AA, BB, CC, DD);
+        md5_output(input, H);
         return mode = FINISH;
     }
     else
