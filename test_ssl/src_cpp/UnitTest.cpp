@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 16:38:14 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 21:16:04 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/16 21:39:27 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ UnitTest::ErrorTests()
 void
 UnitTest::BasicTests()
 {
-	FILE *buf;
-	char res[400];
 	this->InitBasicCases();
 
 	std::cout << "\nBASIC TESTS" << std::endl;
@@ -93,8 +91,6 @@ UnitTest::BasicTests()
 void
 UnitTest::LongTermTests()
 {
-	FILE *buf;
-	char res[400];
 	this->InitLongTermCases();
 
 	std::cout << "\nLONG TERM TESTS" << std::endl;
