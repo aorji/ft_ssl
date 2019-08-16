@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:30:56 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 14:23:36 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/16 15:16:46 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void before_checksum(t_input *input)
             set_flag(input, 's', 0);   
         }
         else
-            ft_printf("SHA245(%s)= ", input->message_name);
+            ft_printf("SHA256(%s)= ", input->message_name);
     }
 }
 
