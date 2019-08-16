@@ -6,39 +6,16 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:49:01 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/15 19:28:46 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/16 14:02:37 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/sha256.h"
 
-unsigned int LitToBigEndian(unsigned int x)
+uint32_t lit_to_bigendian(uint32_t word)
 {
-	return (((x>>24) & 0x000000ff) | ((x>>8) & 0x0000ff00) | ((x<<8) & 0x00ff0000) | ((x<<24) & 0xff000000));
+	return (0x000000ff & word) << 24 | (0x0000ff00 & word) << 8 | (0x00ff0000 & word) >> 8 | (0xff000000 & word) >> 24;
 }
-
-static void print_xset(uint32_t str[], size_t len)
-{
-    size_t i = 0;
-    while (i < len)
-    {
-
-        ft_printf("%.8x\n", LitToBigEndian(str[i]));
-        i++;
-    }
-    ft_printf("\n");
-}
-
-// static void print_bitset(uint8_t *str, size_t len)
-// {
-//     size_t i = 0;
-//     while (i < len)
-//     {
-//         ft_printf("%s ", ft_itoa_base((int)(str[i]), 2));
-//         i++;
-//     }
-//     ft_printf("\n");
-// }
 
 static void init_magic_num()
 {
@@ -76,34 +53,36 @@ static void append_lenght(void *message, size_t from, size_t len)
         len = len >> 8;
     }
 }
-    
+
+static void convert_message(uint32_t W[64], uint32_t *message)
+{
+	int i = 0;
+	while (i < 16)
+	{
+		W[i] = lit_to_bigendian(message[i]);//(0x000000ff & message[i]) << 24 | (0x0000ff00 & message[i]) << 8 | (0x00ff0000 & message[i]) >> 8 | (0xff000000 & message[i]) >> 24;
+		i++;
+	}
+}
+
 /*
  * step 3
  */
 static void calculation_procedure(void *message, int times)
 {
     int offset = 0;
-	int t = 0;
-	uint32_t W[64];
+	int t;
+	uint32_t W[64] = {0};
 	uint32_t T[2] = {0};
 
     while ( times-- )
     {
-        uint32_t *M = ((uint32_t *)(message + offset));
-        
-		while (t < 16)
-		{
-			W[t] = M[t];
-			t++;
-		}
+		convert_message(W, (uint32_t *)(message + offset));
+		t = 16;
 		while ( t < 64)
 		{
 			W[t] = SSIG1(W[t-2]) + W[t-7] + SSIG0(W[t-15]) + W[t-16];
 			t++;
 		}
-
-		print_xset(W, 64);
-
 		HH[0] = H[0];
 		HH[1] = H[1];
 		HH[2] = H[2];
@@ -113,7 +92,7 @@ static void calculation_procedure(void *message, int times)
 		HH[6] = H[6];
 		HH[7] = H[7];
 		t = 0;
-		while (t < 63)
+		while (t < 64)
 		{
 			T[0] = HH[7] + BSIG1(HH[4]) + CH(HH[4], HH[5], HH[6]) + K[t] + W[t];
 			T[1] = BSIG0(HH[0]) + MAJ(HH[0], HH[1], HH[2]);
@@ -153,13 +132,13 @@ enum hash_mode sha256(t_input *input)
             append_padding(input->message, input->message_size, MAX_HASH_MESSAGE_LEN);
             append_lenght(input->message, MAX_HASH_MESSAGE_LEN, input->total_size * BIT_NUM);
             calculation_procedure(input->message, 2);
-            sha256_output(input, H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
+            sha256_output(input, lit_to_bigendian(H[0]), lit_to_bigendian(H[1]), lit_to_bigendian(H[2]), lit_to_bigendian(H[3]), lit_to_bigendian(H[4]), lit_to_bigendian(H[5]), lit_to_bigendian(H[6]), lit_to_bigendian(H[7]));
             return mode = FINISH;
         }
         append_padding(input->message, input->message_size, a);
         append_lenght(input->message, a, input->total_size * BIT_NUM);
         calculation_procedure(input->message, 1);
-        sha256_output(input, H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
+        sha256_output(input, lit_to_bigendian(H[0]), lit_to_bigendian(H[1]), lit_to_bigendian(H[2]), lit_to_bigendian(H[3]), lit_to_bigendian(H[4]), lit_to_bigendian(H[5]), lit_to_bigendian(H[6]), lit_to_bigendian(H[7]));
         return mode = FINISH;
     }
     else
