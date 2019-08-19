@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/08/16 21:40:29 by aorji            ###   ########.fr        #
+#    Updated: 2019/08/19 11:51:23 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ $(OBJ_DIR)%.o:	$(SRC_DIR)%.cpp
 
 re:
 	make fclean
+	cd .. && make fclean
 	make
 
 clean:

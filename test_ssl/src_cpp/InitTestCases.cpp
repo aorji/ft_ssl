@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 20:15:05 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 21:23:00 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 11:54:11 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ UnitTest::InitEmtpyCases()
 void
 UnitTest::InitErrorCases()
 {
+	errorTestCases.push_back(TestParam("./ft_ssl md4", ""));
+	errorTestCases.push_back(TestParam("./ft_ssl s2hak", ""));
 	/*
 	**	md5
 	*/
@@ -53,6 +55,7 @@ bab8b3201b99cbabedd725597d545804 test_files/test_with_nonewline.c\n"));
 void
 UnitTest::InitBasicCases()
 {
+	basicTestCases.push_back(TestParam("./ft_ssl", "usage: ft_ssl command [command opts] [command args]\n"));
 	/*
 	**	md5
 	*/
