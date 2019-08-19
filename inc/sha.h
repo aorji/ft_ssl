@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.h                                           :+:      :+:    :+:   */
+/*   sha.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 12:40:57 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 14:21:40 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 14:18:57 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,13 @@ static const int LEN_SIZE = 8;
 
 static const int BIT_NUM = 8;
 
-uint32_t lit_to_bigendian(uint32_t word);
+uint32_t	lit_to_bigendian(uint32_t word);
+// void		append_padding(void *message, size_t from, size_t to);
+// void		append_lenght(void *message, size_t from, size_t len);
+// void		convert_message(uint32_t W[64], uint32_t *message);
+// void		calculation_procedure(void *message, int times);
 
-void sha256_output(t_input *input, uint32_t H[]);
+void		sha256_output(t_input *input, uint32_t H[]);
+void		sha224_output(t_input *input, uint32_t H[]);
 
 #endif

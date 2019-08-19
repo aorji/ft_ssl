@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 16:36:15 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 20:07:29 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 13:57:18 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ public:
 	
 	void LongTermTests();
 	void InitLongTermCases();
+
+	void Summary(void);
 
 private:
 	void ASSERT_EQ(std::string expected, std::string actual );

@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   sha224.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 16:49:01 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 14:17:55 by aorji            ###   ########.fr       */
+/*   Created: 2019/08/19 12:00:02 by aorji             #+#    #+#             */
+/*   Updated: 2019/08/19 14:17:43 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/sha.h"
 
-uint32_t lit_to_bigendian(uint32_t word)
-{
-	return (0x000000ff & word) << 24 | (0x0000ff00 & word) << 8 | (0x00ff0000 & word) >> 8 | (0xff000000 & word) >> 24;
-}
-
 static void init_magic_num()
 {
-	H[0] = 0x6a09e667;
-	H[1] = 0xbb67ae85;
-	H[2] = 0x3c6ef372;
-	H[3] = 0xa54ff53a;
-	H[4] = 0x510e527f;
-	H[5] = 0x9b05688c;
-	H[6] = 0x1f83d9ab;
-	H[7] = 0x5be0cd19;
+	H[0] = 0xc1059ed8;
+	H[1] = 0x367cd507;
+	H[2] = 0x3070dd17;
+	H[3] = 0xf70e5939;
+	H[4] = 0xffc00b31;
+	H[5] = 0x68581511;
+	H[6] = 0x64f98fa7;
+	H[7] = 0xbefa4fa4;
 }
 
 /*
@@ -121,7 +116,7 @@ static void calculation_procedure(void *message, int times)
 /*
  * entry piont
  */
-enum hash_mode sha256(t_input *input)
+enum hash_mode sha224(t_input *input)
 {
 	static enum hash_mode mode = START;
     (mode == START) ? init_magic_num() : 0;
@@ -132,13 +127,13 @@ enum hash_mode sha256(t_input *input)
             append_padding(input->message, input->message_size, MAX_HASH_MESSAGE_LEN);
             append_lenght(input->message, MAX_HASH_MESSAGE_LEN, input->total_size * BIT_NUM);
             calculation_procedure(input->message, 2);
-            sha256_output(input, H);
+            sha224_output(input, H);
             return mode = FINISH;
         }
         append_padding(input->message, input->message_size, a);
         append_lenght(input->message, a, input->total_size * BIT_NUM);
         calculation_procedure(input->message, 1);
-        sha256_output(input, H);
+        sha224_output(input, H);
         return mode = FINISH;
     }
     else

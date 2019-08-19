@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 16:34:35 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 21:42:52 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 14:04:14 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,5 @@ int main()
 	test.BasicTests();
 	// test.LongTermTests();
 	test.ErrorTests();
+	test.Summary();
 }

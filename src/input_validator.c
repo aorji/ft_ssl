@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 19:32:31 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 13:12:45 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	cmd_options(t_input *input)
 		input->cmd_opts = 1;
 	else if (!ft_strcmp((input->av)[1], "sha256"))
 		input->cmd_opts = 2;
+	else if (!ft_strcmp((input->av)[1], "sha224"))
+		input->cmd_opts = 3;
 	else
 	{
 		input->error = INVALIDE_CMD;
