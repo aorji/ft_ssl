@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 14:27:43 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 18:16:35 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #define BUFFSIZE 64 //DO NOT CHANGE!!!!
 #define FLAG_NUM 4
-#define MAX_HASH_MESSAGE_LEN 120
+#define MAX_MESSAGE_LEN 224
 // typedef long double		t_vector __attribute__((vector_size(sizeof(LD)*3))); 
 
 enum    input_type
@@ -43,7 +43,8 @@ enum    cmd_type
     NO_TYPE = 0,
     MD5 = 1,
     SHA256 = 2,
-    SHA224 = 3
+    SHA224 = 3,
+    SHA384 = 4
 };
 
 typedef	struct		s_input
@@ -59,7 +60,7 @@ typedef	struct		s_input
     uint8_t         flags_opt[FLAG_NUM];
     uint8_t         flags_set[FLAG_NUM];
 
-    uint8_t         message[MAX_HASH_MESSAGE_LEN];
+    uint8_t         message[MAX_MESSAGE_LEN];
     size_t          message_size;
     char            *message_name;
 
@@ -78,9 +79,10 @@ void            reset_arr(uint8_t dst[], char src[], int dstlen, int srclen);
 enum hash_mode  md5(t_input *input);
 enum hash_mode  sha256(t_input *input);
 enum hash_mode  sha224(t_input *input);
+enum hash_mode  sha384(t_input *input);
 enum hash_mode  call_hashing_algorithm(t_input *input);
 
-static enum hash_mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha256, &sha224 };
+static enum hash_mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha256, &sha224, &sha384 };
 
 /*  structure_processing.c  */
 t_input         *init_input(int ac, char **av);

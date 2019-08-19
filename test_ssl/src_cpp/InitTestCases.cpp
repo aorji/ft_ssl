@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 20:15:05 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 14:25:42 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 17:13:17 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ MD5 (\"world\") = 7d793037a0760186574b0282f2f435e7\n"));
 	"MD5 (\"hello\") = 5d41402abc4b2a76b9719d911017c592\n\
 7d793037a0760186574b0282f2f435e7\n"));
 	/* flags */
+	basicTestCases.push_back(TestParam("./ft_ssl md5 -r test_files/56.txt", "99a21be1ed3bf2e80d072807702787e6 *test_files/56.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl md5 -r test_files/67.txt", "148c0ad822a6b9020256b3e5482eab00 *test_files/67.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl md5 -rq test_files/br.txt", "3e58b3eb125c5f235d0f1462a347906d\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl md5 -qr test_files/chmod000", "d41d8cd98f00b204e9800998ecf8427e\n"));
@@ -96,6 +97,7 @@ MD5 (\"world\") = 7d793037a0760186574b0282f2f435e7\n"));
 	"SHA256 (\"hellllllllllllllllllloshellllllllllllllllllloshellllllllllllllll\") = dbb085e9de2c35e6ce2ac4d1f37253a67b181d5ab049b8f063e941903831f182\n\
 SHA256 (\"world\") = 486ea46224d1bb4fb680f34f7c9ad96a8f24ec88be73ea8e5a6c65260e9cb8a7\n"));
 	/* flags */
+	basicTestCases.push_back(TestParam("./ft_ssl sha256 -r test_files/56.txt", "36abf9de432d0af648eaefc894d549b8de18caed37308749a2f6373b6f6060b9 *test_files/56.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha256 -r test_files/67.txt", "1375293b850e5a37605c9de4d7355783deccfaa16a553b6c0821e13082aa2d96 *test_files/67.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha256 -rq test_files/br.txt", "d438ebf3636abd6c029bbfd48845ab6b6c99328419bc281e88cd64c05c2b0479\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha256 -qr test_files/chmod000", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\n"));
@@ -113,6 +115,7 @@ SHA256 (\"world\") = 486ea46224d1bb4fb680f34f7c9ad96a8f24ec88be73ea8e5a6c65260e9
 	"SHA224 (\"hellllllllllllllllllloshellllllllllllllllllloshellllllllllllllll\") = a61bbacfaa10d48e8a674bf591d8b9e7eff6bffc360042fd1b49603b\n\
 SHA224 (\"world\") = 06d2dbdb71973e31e4f1df3d7001fa7de268aa72fcb1f6f9ea37e0e5\n"));
 	/* flags */
+	basicTestCases.push_back(TestParam("./ft_ssl sha224 -r test_files/56.txt", "22263c21fd956a62f2376db9aaa00f8baae7d0055dcba60817475074 *test_files/56.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha224 -r test_files/67.txt", "5f63ffad5d9d23106321d750e0e209668ef6da4dddaf6621fc9ceb3d *test_files/67.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha224 -rq test_files/br.txt", "aec4924a9e720e31541cf0a81f232977fbc1eceaa70300ef2ae7903a\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha224 -qr test_files/chmod000", "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f\n"));

@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 13:12:45 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 15:24:03 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ static void	cmd_options(t_input *input)
 		input->cmd_opts = 2;
 	else if (!ft_strcmp((input->av)[1], "sha224"))
 		input->cmd_opts = 3;
+	else if (!ft_strcmp((input->av)[1], "sha384"))
+		input->cmd_opts = 4;
 	else
 	{
 		input->error = INVALIDE_CMD;
 		error_output(input->cmd_opts, (input->av)[1],
 		" is an invalid command.\nStandard commands:\n\n\
-Message Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
+Message Digest commands:\nmd5\nsha256\nsha224\nsha384\nsha512\n\nCipher commands:\n");
 	}
 }
 

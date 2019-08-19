@@ -4,27 +4,36 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "name": "Launch",
-            "type": "lldb",
+            "type": "gdb",
             "request": "launch",
-            "program": "${workspaceFolder}/ft_ssl",
-            "preLaunchTask": "make re",
-            "args": ["md5", "ft_ssl" ],
+            "program": "${workspaceFolder}/test_ssl/a.out",
+            // "preLaunchTask": "make re",
+            "args": [],
             // "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            // "environment": [],
-            // "externalConsole": true,
-            // "linux": {
-            //     "MIMode": "gdb"
-            // },
-            // "osx": {
-            //     "MIMode": "lldb"
-            // },
-            // "windows": {
-            //     "MIMode": "gdb"
-            // }
+            "cwd": "${workspaceFolder}/test_ssl"
         }
+        // {
+        //     "name": "Launch",
+        //     "type": "lldb",
+        //     "request": "launch",
+        //     "program": "${workspaceFolder}/ft_ssl",
+        //     "preLaunchTask": "make re",
+        //     "args": ["md5", "ft_ssl" ],
+        //     // "stopAtEntry": false,
+        //     "cwd": "${workspaceFolder}",
+        //     // "environment": [],
+        //     // "externalConsole": true,
+        //     // "linux": {
+        //     //     "MIMode": "gdb"
+        //     // },
+        //     // "osx": {
+        //     //     "MIMode": "lldb"
+        //     // },
+        //     // "windows": {
+        //     //     "MIMode": "gdb"
+        //     // }
+        // }
     ]
 }

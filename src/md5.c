@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 14:13:58 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/19 17:10:06 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void calculation_procedure(void *message, int times)
     int offset = 0;
     while ( times-- )
     {
-        uint32_t *X = ((uint32_t *)(message + offset));
+        uint32_t *X = (uint32_t *)(message) + offset;
         HH[0] = H[0];
         HH[1] = H[1];
         HH[2] = H[2];
@@ -78,7 +78,7 @@ static void calculation_procedure(void *message, int times)
         H[1] += HH[1];
         H[2] += HH[2];
         H[3] += HH[3];
-        offset += 64;
+        offset += 16;
     }
 }
 
