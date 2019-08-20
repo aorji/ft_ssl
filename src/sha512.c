@@ -1,43 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   sha512.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 16:49:01 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/20 17:09:06 by aorji            ###   ########.fr       */
+/*   Created: 2019/08/20 16:07:51 by aorji             #+#    #+#             */
+/*   Updated: 2019/08/20 18:15:57 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/sha.h"
+#include "../inc/sha384_512.h"
 
-uint32_t lit_to_bigendian(uint32_t word)
-{
-	return (0x000000ff & word) << 24 | (0x0000ff00 & word) << 8 | (0x00ff0000 & word) >> 8 | (0xff000000 & word) >> 24;
-}
 
 static void init_magic_num()
 {
-	H[0] = 0x6a09e667;
-	H[1] = 0xbb67ae85;
-	H[2] = 0x3c6ef372;
-	H[3] = 0xa54ff53a;
-	H[4] = 0x510e527f;
-	H[5] = 0x9b05688c;
-	H[6] = 0x1f83d9ab;
-	H[7] = 0x5be0cd19;
+	H[0] = 0x6a09e667f3bcc908;
+	H[1] = 0xbb67ae8584caa73b;
+	H[2] = 0x3c6ef372fe94f82b;
+	H[3] = 0xa54ff53a5f1d36f1;
+	H[4] = 0x510e527fade682d1;
+	H[5] = 0x9b05688c2b3e6c1f;
+	H[6] = 0x1f83d9abfb41bd6b;
+	H[7] = 0x5be0cd19137e2179;
 }
 
 /*
  * step 1
  */
-static void append_padding(void *message, size_t from, size_t to)
+static void append_padding(uint8_t message[240], size_t from, size_t to)
 {
     size_t i = from;
     while(from < to)
     {
-        ((uint8_t *)message)[from] = PADDING[from - i];
+        message[from] = PADDING[from - i];
         ++from;
     }
 }
@@ -45,21 +41,23 @@ static void append_padding(void *message, size_t from, size_t to)
 /*
  * step 2
  */
-static void append_lenght(void *message, size_t from, size_t len)
+static void append_lenght(uint8_t message[240], size_t from, size_t len)
 {
-    for(int i = 7; i >= 0; --i)
+	int i = LEN_SIZE - 1;
+    while(i >= 0)
     {
-        ((uint8_t *)message)[from + i] = (uint8_t)(len);
+        message[from + i] = (uint8_t)(len);
         len = len >> 8;
+		--i;
     }
 }
 
-static void convert_message(uint32_t W[64], uint32_t *message)
+static void convert_message(uint64_t W[64], uint64_t *message)
 {
 	int i = 0;
 	while (i < 16)
 	{
-		W[i] = lit_to_bigendian(message[i]);//(0x000000ff & message[i]) << 24 | (0x0000ff00 & message[i]) << 8 | (0x00ff0000 & message[i]) >> 8 | (0xff000000 & message[i]) >> 24;
+		W[i] = lit_to_bigendian64(message[i]);
 		i++;
 	}
 }
@@ -71,16 +69,16 @@ static void calculation_procedure(void *message, int times)
 {
     int offset = 0;
 	int t;
-	uint32_t W[64] = {0};
-	uint32_t T[2] = {0};
+	uint64_t W[80] = {0};
+	uint64_t T[2] = {0};
 
     while ( times-- )
     {
-		convert_message(W, (uint32_t *)(message) + offset);
+		convert_message(W, (uint64_t *)(message) + offset);
 		t = 16;
-		while ( t < 64)
+		while ( t < 80)
 		{
-			W[t] = SSIG1(W[t-2]) + W[t-7] + SSIG0(W[t-15]) + W[t-16];
+			W[t] =	SSIG1(W[t-2]) + W[t-7] + SSIG0(W[t-15]) + W[t-16];
 			t++;
 		}
 		HH[0] = H[0];
@@ -92,7 +90,7 @@ static void calculation_procedure(void *message, int times)
 		HH[6] = H[6];
 		HH[7] = H[7];
 		t = 0;
-		while (t < 64)
+		while (t < 80)
 		{
 			T[0] = HH[7] + BSIG1(HH[4]) + CH(HH[4], HH[5], HH[6]) + K[t] + W[t];
 			T[1] = BSIG0(HH[0]) + MAJ(HH[0], HH[1], HH[2]);
@@ -121,7 +119,7 @@ static void calculation_procedure(void *message, int times)
 /*
  * entry piont
  */
-enum hash_mode sha256(t_input *input)
+enum hash_mode sha512(t_input *input)
 {
 	static enum hash_mode mode = START;
     (mode == START) ? init_magic_num() : 0;
@@ -129,16 +127,16 @@ enum hash_mode sha256(t_input *input)
     {
         if (input->message_size >= a)
         {
-            append_padding(input->message, input->message_size, g_max_message_len);
+            append_padding(input->message, input->message_size, n);
             append_lenght(input->message, g_max_message_len, input->total_size * BIT_NUM);
             calculation_procedure(input->message, 2);
-            sha256_output(input, H);
+            sha512_output(input, H);
             return mode = FINISH;
         }
         append_padding(input->message, input->message_size, a);
         append_lenght(input->message, a, input->total_size * BIT_NUM);
-        calculation_procedure(input->message, 1);
-        sha256_output(input, H);
+		calculation_procedure(input->message, 1);
+        sha512_output(input, H);
         return mode = FINISH;
     }
     else

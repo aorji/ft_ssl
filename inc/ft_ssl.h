@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 18:16:35 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/20 18:15:22 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 # include <sys/mman.h>
 # include <sys/stat.h>
 
-#define BUFFSIZE 64 //DO NOT CHANGE!!!!
 #define FLAG_NUM 4
-#define MAX_MESSAGE_LEN 224
-// typedef long double		t_vector __attribute__((vector_size(sizeof(LD)*3))); 
+uint32_t g_buffsize, g_max_message_len;
 
 enum    input_type
 {
@@ -42,9 +40,10 @@ enum    cmd_type
 {
     NO_TYPE = 0,
     MD5 = 1,
-    SHA256 = 2,
     SHA224 = 3,
-    SHA384 = 4
+    SHA256 = 2,
+    SHA384 = 4,
+    SHA512 = 5
 };
 
 typedef	struct		s_input
@@ -60,7 +59,7 @@ typedef	struct		s_input
     uint8_t         flags_opt[FLAG_NUM];
     uint8_t         flags_set[FLAG_NUM];
 
-    uint8_t         message[MAX_MESSAGE_LEN];
+    uint8_t         message[256];
     size_t          message_size;
     char            *message_name;
 
@@ -77,12 +76,13 @@ enum    hash_mode
 void            reset_arr(uint8_t dst[], char src[], int dstlen, int srclen);
 
 enum hash_mode  md5(t_input *input);
-enum hash_mode  sha256(t_input *input);
 enum hash_mode  sha224(t_input *input);
+enum hash_mode  sha256(t_input *input);
 enum hash_mode  sha384(t_input *input);
+enum hash_mode  sha512(t_input *input);
 enum hash_mode  call_hashing_algorithm(t_input *input);
 
-static enum hash_mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha256, &sha224, &sha384 };
+static enum hash_mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha224, &sha256, &sha384, &sha512 };
 
 /*  structure_processing.c  */
 t_input         *init_input(int ac, char **av);
@@ -107,7 +107,7 @@ size_t          get_filesize(const char *filename);
 size_t          is_dir(const char *filename);
 int             validate_file(t_input *input, int fd);
 
-
+uint32_t lit_to_bigendian(uint32_t word);
 void output_after_checksum(t_input *input);
 void output_before_checksum(t_input *input, const char *cmd_name);
 #endif

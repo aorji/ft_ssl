@@ -6,34 +6,24 @@
     "configurations": [
         {
             "name": "Launch",
-            "type": "gdb",
+            "type": "lldb",
             "request": "launch",
-            "program": "${workspaceFolder}/test_ssl/a.out",
-            // "preLaunchTask": "make re",
-            "args": [],
+            "program": "${workspaceFolder}/ft_ssl",
+            "preLaunchTask": "make re",
+            "args": ["sha512", "testfile" ],
             // "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/test_ssl"
+            "cwd": "${workspaceFolder}",
+            // "environment": [],
+            // "externalConsole": true,
+            // "linux": {
+            //     "MIMode": "gdb"
+            // },
+            // "osx": {
+            //     "MIMode": "lldb"
+            // },
+            // "windows": {
+            //     "MIMode": "gdb"
+            // }
         }
-        // {
-        //     "name": "Launch",
-        //     "type": "lldb",
-        //     "request": "launch",
-        //     "program": "${workspaceFolder}/ft_ssl",
-        //     "preLaunchTask": "make re",
-        //     "args": ["md5", "ft_ssl" ],
-        //     // "stopAtEntry": false,
-        //     "cwd": "${workspaceFolder}",
-        //     // "environment": [],
-        //     // "externalConsole": true,
-        //     // "linux": {
-        //     //     "MIMode": "gdb"
-        //     // },
-        //     // "osx": {
-        //     //     "MIMode": "lldb"
-        //     // },
-        //     // "windows": {
-        //     //     "MIMode": "gdb"
-        //     // }
-        // }
     ]
 }

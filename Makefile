@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/08/19 15:38:32 by aorji            ###   ########.fr        #
+#    Updated: 2019/08/20 16:12:42 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC     =   main.c															\
 			md5.c		md5_output.c output.c										\
 			sha256.c	sha256_output.c										\
 			sha224.c	sha224_output.c\
+			sha512.c	sha512_output.c\
 			sha384.c sha384_output.c
 OBJ     =   $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 INC		=	$(INC_DIR)

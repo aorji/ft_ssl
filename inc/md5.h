@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 18:16:03 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/20 17:08:31 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MD5_H
 
 #include "../inc/ft_ssl.h"
-#define MAX_HASH_MESSAGE_LEN 120
 
 /* 
  * ROTATE_LEFT rotates x left n bits.

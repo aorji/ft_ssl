@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 17:10:06 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/20 17:09:06 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ enum hash_mode md5(t_input *input)
     {
         if (input->message_size >= a)
         {
-            append_padding(input->message, input->message_size, MAX_HASH_MESSAGE_LEN);
-            append_lenght(input->message, MAX_HASH_MESSAGE_LEN, input->total_size * BIT_NUM);
+            append_padding(input->message, input->message_size, g_max_message_len);
+            append_lenght(input->message, g_max_message_len, input->total_size * BIT_NUM);
             calculation_procedure(input->message, 2);
             md5_output(input, H);
             return mode = FINISH;

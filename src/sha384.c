@@ -6,17 +6,17 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 14:36:10 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 20:03:22 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/20 17:09:06 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/sha384_512.h"
 
 //         ft_printf("%s ", ft_itoa_base((str[i]), 2));
-static uint32_t lit_to_bigendian(uint32_t word)
-{
-	return (0x000000ff & word) << 24 | (0x0000ff00 & word) << 8 | (0x00ff0000 & word) >> 8 | (0xff000000 & word) >> 24;
-}
+// uint32_t lit_to_bigendian(uint32_t word)
+// {
+// 	return (0x000000ff & word) << 24 | (0x0000ff00 & word) << 8 | (0x00ff0000 & word) >> 8 | (0xff000000 & word) >> 24;
+// }
 
 uint64_t lit_to_bigendian64(uint64_t word)
 {
@@ -139,8 +139,8 @@ enum hash_mode sha384(t_input *input)
     {
         if (input->message_size >= a)
         {
-            append_padding(input->message, input->message_size, MAX_HASH_MESSAGE_LEN);
-            append_lenght(input->message, MAX_HASH_MESSAGE_LEN, input->total_size * BIT_NUM);
+            append_padding(input->message, input->message_size, g_max_message_len);
+            append_lenght(input->message, g_max_message_len, input->total_size * BIT_NUM);
             calculation_procedure(input->message, 2);
             sha384_output(input, H);
             return mode = FINISH;

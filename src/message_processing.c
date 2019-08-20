@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/16 20:35:04 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/20 17:30:00 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@ static void hash_string(t_input *input, char *full_message, size_t size)
 	input->total_size = size;
 	while (1)
 	{
-		if (input->total_size - start < 64)
+		if (input->total_size - start < g_buffsize)
 			part_size = input->total_size - start;
 		else
-			part_size = 64;
+			part_size = g_buffsize;
 		set_message(input, full_message + start, full_message, part_size);
 		if (call_hashing_algorithm(input) == FINISH)
 			break;
-		start += 64;
+		start += g_buffsize;
 	}
 }
+
 static char		*fstrjoin(char const *s1, char const *s2, size_t len1, size_t len2)
 {
 	char	*new;
@@ -62,7 +63,7 @@ static char		*fstrjoin(char const *s1, char const *s2, size_t len1, size_t len2)
 
 void process_message_from_stdin(t_input *input)
 {
-	char		BUFF[BUFFSIZE];
+	char		BUFF[g_buffsize];
 	static int	visited = 0;
 	char    *resulting_str;
 	char    *tmp;
@@ -74,7 +75,7 @@ void process_message_from_stdin(t_input *input)
 	input->total_size = 0;
 	while ( 1 )
 	{
-		int read_size = read(0, BUFF, BUFFSIZE);
+		int read_size = read(0, BUFF, g_buffsize);
 		if (read_size > 0)
         {
 			tmp = fstrjoin(resulting_str, BUFF, input->total_size, read_size);
@@ -115,7 +116,7 @@ argument -- s\nusage: md5 [-pqrtx] [-s string] [files ...]");
 
 void process_message_from_file(t_input *input)
 {
-	char BUFF[BUFFSIZE];
+	char BUFF[g_buffsize];
 
 	for (; input->position < input->ac; ++(input->position))
 	{
@@ -126,7 +127,7 @@ void process_message_from_file(t_input *input)
 			continue;
 		while (1)
 		{
-			int read_size = read(fd, BUFF, BUFFSIZE);
+			int read_size = read(fd, BUFF, g_buffsize);
 			if (read_size != -1)
 			{
 				set_message(input, BUFF, (input->av)[input->position], read_size);

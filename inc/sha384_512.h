@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 14:36:08 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 20:00:42 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/20 17:08:41 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define SHA384_512_H
 
 #include "../inc/ft_ssl.h"
-#define MAX_HASH_MESSAGE_LEN 224
 /* 
 **	Rotate, shift macros
 */
@@ -81,7 +80,9 @@ static const int LEN_SIZE = 16;
 static const int BIT_NUM = 8;
 
 uint64_t lit_to_bigendian64(uint64_t word);
+uint32_t lit_to_bigendian(uint32_t word);
 
 void		sha384_output(t_input *input, uint64_t H[]);
+void		sha512_output(t_input *input, uint64_t H[]);
 
 #endif

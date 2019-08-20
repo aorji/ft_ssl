@@ -29,7 +29,7 @@
         // }
         {
             "label": "make re",
-            "command": "make re",
+            "command": "make",
             "type": "shell"
         }]
 }

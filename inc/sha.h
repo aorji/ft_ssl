@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 12:40:57 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 18:13:41 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/20 17:08:36 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define SHA256_H
 
 #include "../inc/ft_ssl.h"
-#define MAX_HASH_MESSAGE_LEN 120
 /* 
 **	Rotate, shift macros
 */

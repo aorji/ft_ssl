@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:29:29 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 18:16:56 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/20 17:38:14 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_input *init_input(int ac, char **av)
 
 void	set_message(t_input *input, char *message, char *message_name, int size)
 {
-	reset_arr(input->message, message, MAX_MESSAGE_LEN, size);
+	reset_arr(input->message, message, g_max_message_len, size);
 	input->message_name = message_name;
 	input->message_size = size;
 }
