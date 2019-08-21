@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 14:36:08 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/20 17:08:41 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 20:19:03 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHA384_512_H
 
 #include "../inc/ft_ssl.h"
+
 /* 
 **	Rotate, shift macros
 */
@@ -27,7 +28,6 @@
 #define BSIG1(x)	(ROTR((x), 14)	^ ROTR((x), 18)	^ ROTR((x), 41))
 #define SSIG0(x)	(ROTR((x), 1)	^ ROTR((x), 8)	^ SHR( (x), 7))
 #define SSIG1(x)	(ROTR((x), 19)	^ ROTR((x), 61)	^ SHR( (x), 6))
-
 
 static const uint64_t K[] = {
 	0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
@@ -55,14 +55,6 @@ static const uint64_t K[] = {
 static uint64_t H[] = {
 	0,	0,	0,	0,	0,	0,	0,	0
 };
-static uint64_t HH[] = {
-/*	a	b	c	d	e	f	g	h	*/
-	0,	0,	0,	0,	0,	0,	0,	0
-};
-
-static uint8_t PADDING[128] = {
-  0x80
-};
 
 /*
 ** The message is "padded" (extended) so that its length (in bits) is congruent to 896, modulo 1024
@@ -79,10 +71,6 @@ static const int LEN_SIZE = 16;
 
 static const int BIT_NUM = 8;
 
-uint64_t lit_to_bigendian64(uint64_t word);
-uint32_t lit_to_bigendian(uint32_t word);
-
-void		sha384_output(t_input *input, uint64_t H[]);
-void		sha512_output(t_input *input, uint64_t H[]);
+void calculation_procedure64(void *message, int times, uint64_t H[]);
 
 #endif

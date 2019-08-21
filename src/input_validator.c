@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 16:33:42 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 19:37:59 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,42 +52,3 @@ void	validate_input(t_input *input)
 Message Digest commands:\nmd5\nsha256\nsha224\nsha384\nsha512\n\nCipher commands:\n");
 	}
 }
-
-// static void	param_num(t_input *input)
-// {
-// 	if (input->ac < 2)
-// 	{
-
-// 		write(1, "ft_ssl> ", 8);
-// 		char	BUFF[g_buffsize];
-// 		char    *resulting_str;
-// 		char    *tmp;
-		
-// 		resulting_str = (char *)malloc(sizeof(char));
-// 		while ( 1 )
-// 		{
-// 			int read_size = read(0, BUFF, g_buffsize);
-// 			if (read_size > 0)
-// 			{
-// 				tmp = ft_strjoin(resulting_str, BUFF);
-// 				ft_strdel(&resulting_str);
-// 				resulting_str = tmp;
-// 				continue;
-// 			}
-// 			break;
-// 		}
-// 		tmp = ft_strjoin("ft_ssl ", resulting_str);
-// 		ft_strdel(&resulting_str);
-// 		resulting_str = tmp;
-
-// 		input->ac = ft_count_words(resulting_str, ' ');
-// 		input->av = ft_strsplit(resulting_str, ' ');
-// 		ft_strdel(&resulting_str);
-// 	}
-// }
-
-// void		validate_input(t_input *input)
-// {
-// 	param_num(input);
-// 	cmd_options(input);
-// }

@@ -6,13 +6,11 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 14:41:54 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/19 11:54:20 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 17:52:52 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
-
-// static char		*g_usage = "\nusage: md5 [-pqr] [-s string] [files ...]";
 
 static void		add_flag(t_input *input)
 {

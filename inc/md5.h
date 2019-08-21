@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:51:30 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/20 17:08:31 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 20:10:35 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,6 @@ static const uint32_t T[] = {
   0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-static uint8_t PADDING[64] = {
-  0x80
-};
-
 /*
  * Magic constants
  */
@@ -93,7 +89,5 @@ static const int  a = 56;
 static const int LEN_SIZE = 8;
 
 static const int BIT_NUM = 8;
-
-void md5_output(t_input *input, uint32_t H[]);
 
 #endif

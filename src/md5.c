@@ -6,11 +6,45 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 16:30:44 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 20:16:17 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/md5.h"
+
+static void md5_output(t_input *input)
+{
+    if (input->read_from == FILE_STRING) output_before_checksum(input, "MD5 ");
+    int i = 16;
+    while(i--)
+    {
+        ft_printf("%.2x", (uint8_t)H[0]);
+        H[0] >>= 8;
+        if (i == 4) H[0] = H[3];
+        else if (i == 8) H[0] = H[2];
+        else if (i == 12) H[0] = H[1];
+    }
+    if (input->read_from == FILE_STRING) output_after_checksum(input);
+    ft_printf("\n");
+}
+
+static void fill_working_variables(char c)
+{
+	if (c == '<')
+	{
+		HH[0] = H[0];
+        HH[1] = H[1];
+        HH[2] = H[2];
+        HH[3] = H[3];
+	}
+	else if (c == '>')
+	{
+		H[0] += HH[0];
+        H[1] += HH[1];
+        H[2] += HH[2];
+        H[3] += HH[3];
+	}
+}
 
 static void init_magic_num()
 {
@@ -18,31 +52,6 @@ static void init_magic_num()
     H[1] = 0xefcdab89;
     H[2] = 0x98badcfe;
     H[3] = 0x10325476;
-}
-
-/*
- * step 1
- */
-static void append_padding(void *message, size_t from, size_t to)
-{
-    size_t i = from;
-    while(from < to)
-    {
-        ((uint8_t *)message)[from] = PADDING[from - i];
-        ++from;
-    }
-}
-
-/*
- * step 2
- */
-static void append_lenght(void *message, size_t from, size_t len)
-{
-    for(int i = 0; i < 8; ++i)      /* 8 time by 8 bits => 64-bit of the length of the message is appended */
-    {
-        ((uint8_t *)message)[from + i] = (uint8_t)(len);
-        len = len >> 8;
-    }
 }
     
 /*
@@ -54,10 +63,7 @@ static void calculation_procedure(void *message, int times)
     while ( times-- )
     {
         uint32_t *X = (uint32_t *)(message) + offset;
-        HH[0] = H[0];
-        HH[1] = H[1];
-        HH[2] = H[2];
-        HH[3] = H[3];
+        fill_working_variables('<');
         for (int j = 0; j < 64; ++j)
         {
             if (j < 16)
@@ -74,10 +80,7 @@ static void calculation_procedure(void *message, int times)
             HH[2] = HH[1];
             HH[1] = HH[1] + ROTATE_LEFT(tmp, s[j]);
         }
-        H[0] += HH[0];
-        H[1] += HH[1];
-        H[2] += HH[2];
-        H[3] += HH[3];
+        fill_working_variables('>');
         offset += 16;
     }
 }
@@ -94,15 +97,15 @@ enum mode md5(t_input *input)
         if (input->message_size >= a)
         {
             append_padding(input->message, input->message_size, g_max_message_len);
-            append_lenght(input->message, g_max_message_len, input->total_size * BIT_NUM);
+            append_lenght(input->message, g_max_message_len, input->total_size * BIT_NUM, LEN_SIZE);
             calculation_procedure(input->message, 2);
-            md5_output(input, H);
+            md5_output(input);
             return hash_mode = FINISH;
         }
         append_padding(input->message, input->message_size, a);
-        append_lenght(input->message, a, input->total_size * BIT_NUM);
+        append_lenght(input->message, a, input->total_size * BIT_NUM, LEN_SIZE);
         calculation_procedure(input->message, 1);
-        md5_output(input, H);
+        md5_output(input);
         return hash_mode = FINISH;
     }
     else

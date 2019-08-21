@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 16:29:30 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 20:56:47 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 
 #define FLAG_NUM 4
+
 uint32_t g_buffsize, g_max_message_len;
 
 enum    input_type
@@ -107,8 +108,17 @@ size_t          get_filesize(const char *filename);
 size_t          is_dir(const char *filename);
 int             validate_file(t_input *input, int fd);
 
-uint32_t lit_to_bigendian(uint32_t word);
-void output_after_checksum(t_input *input);
-void output_before_checksum(t_input *input, const char *cmd_name);
-char		*fstrjoin(char const *s1, char const *s2, size_t len1, size_t len2);
+/*	hash_output			*/
+void			output_after_checksum(t_input *input);
+void			output_before_checksum(t_input *input, const char *cmd_name);
+char			*fstrjoin(char const *s1, char const *s2, size_t len1, size_t len2);
+
+/*	message_padding			*/
+void			append_padding(uint8_t message[], size_t from, size_t to);
+void			append_lenght_bigend(uint8_t message[], size_t from, size_t len, int padding_size);
+void			append_lenght(uint8_t message[], size_t from, size_t len, int padding_size);
+
+uint64_t		lit_to_bigendian64(uint64_t word);
+uint32_t		lit_to_bigendian(uint32_t word);
+
 #endif

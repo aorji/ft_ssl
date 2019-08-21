@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha.h                                              :+:      :+:    :+:   */
+/*   sha224_256.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/15 12:40:57 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/20 17:08:36 by aorji            ###   ########.fr       */
+/*   Created: 2019/08/21 17:49:11 by aorji             #+#    #+#             */
+/*   Updated: 2019/08/21 20:19:16 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHA256_H
 
 #include "../inc/ft_ssl.h"
+
 /* 
 **	Rotate, shift macros
 */
@@ -50,14 +51,6 @@ static const uint32_t K[] = {
 static uint32_t H[] = {
 	0,	0,	0,	0,	0,	0,	0,	0
 };
-static uint32_t HH[] = {
-/*	a	b	c	d	e	f	g	h	*/
-	0,	0,	0,	0,	0,	0,	0,	0
-};
-
-static uint8_t PADDING[64] = {
-  0x80
-};
 
 /*
 ** The message is "padded" (extended) so that its length (in bits) is congruent to 448, modulo 512
@@ -74,13 +67,6 @@ static const int LEN_SIZE = 8;
 
 static const int BIT_NUM = 8;
 
-uint32_t	lit_to_bigendian(uint32_t word);
-// void		append_padding(void *message, size_t from, size_t to);
-// void		append_lenght(void *message, size_t from, size_t len);
-// void		convert_message(uint32_t W[64], uint32_t *message);
-// void		calculation_procedure(void *message, int times);
-
-void		sha256_output(t_input *input, uint32_t H[]);
-void		sha224_output(t_input *input, uint32_t H[]);
+void calculation_procedure32(void *message, int times, uint32_t H[]);
 
 #endif
