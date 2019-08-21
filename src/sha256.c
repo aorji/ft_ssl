@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:49:01 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/20 17:09:06 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 16:30:44 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,10 @@ static void calculation_procedure(void *message, int times)
 /*
  * entry piont
  */
-enum hash_mode sha256(t_input *input)
+enum mode sha256(t_input *input)
 {
-	static enum hash_mode mode = START;
-    (mode == START) ? init_magic_num() : 0;
+	static enum mode hash_mode = START;
+    (hash_mode == START) ? init_magic_num() : 0;
     if (input->message_size < n)
     {
         if (input->message_size >= a)
@@ -133,17 +133,17 @@ enum hash_mode sha256(t_input *input)
             append_lenght(input->message, g_max_message_len, input->total_size * BIT_NUM);
             calculation_procedure(input->message, 2);
             sha256_output(input, H);
-            return mode = FINISH;
+            return hash_mode = FINISH;
         }
         append_padding(input->message, input->message_size, a);
         append_lenght(input->message, a, input->total_size * BIT_NUM);
         calculation_procedure(input->message, 1);
         sha256_output(input, H);
-        return mode = FINISH;
+        return hash_mode = FINISH;
     }
     else
     {
         calculation_procedure(input->message, 1);
-        return mode = CONTINUE;
+        return hash_mode = CONTINUE;
     }
 }

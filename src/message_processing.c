@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/20 17:30:00 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 16:03:08 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void hash_string(t_input *input, char *full_message, size_t size)
 	}
 }
 
-static char		*fstrjoin(char const *s1, char const *s2, size_t len1, size_t len2)
+char		*fstrjoin(char const *s1, char const *s2, size_t len1, size_t len2)
 {
 	char	*new;
 	size_t		i;

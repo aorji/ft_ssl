@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/20 18:15:22 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 16:29:30 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef	struct		s_input
     size_t          total_size;
 }					t_input;
 
-enum    hash_mode
+enum    mode
 {
     CONTINUE = 0,
     START = 1,
@@ -75,14 +75,14 @@ enum    hash_mode
 
 void            reset_arr(uint8_t dst[], char src[], int dstlen, int srclen);
 
-enum hash_mode  md5(t_input *input);
-enum hash_mode  sha224(t_input *input);
-enum hash_mode  sha256(t_input *input);
-enum hash_mode  sha384(t_input *input);
-enum hash_mode  sha512(t_input *input);
-enum hash_mode  call_hashing_algorithm(t_input *input);
+enum mode  md5(t_input *input);
+enum mode  sha224(t_input *input);
+enum mode  sha256(t_input *input);
+enum mode  sha384(t_input *input);
+enum mode  sha512(t_input *input);
+enum mode  call_hashing_algorithm(t_input *input);
 
-static enum hash_mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha224, &sha256, &sha384, &sha512 };
+static enum mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha224, &sha256, &sha384, &sha512 };
 
 /*  structure_processing.c  */
 t_input         *init_input(int ac, char **av);
@@ -110,4 +110,5 @@ int             validate_file(t_input *input, int fd);
 uint32_t lit_to_bigendian(uint32_t word);
 void output_after_checksum(t_input *input);
 void output_before_checksum(t_input *input, const char *cmd_name);
+char		*fstrjoin(char const *s1, char const *s2, size_t len1, size_t len2);
 #endif
