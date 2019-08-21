@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 20:15:05 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/20 18:30:33 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 15:06:06 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ SHA224 (\"world\") = 06d2dbdb71973e31e4f1df3d7001fa7de268aa72fcb1f6f9ea37e0e5\n"
 	/*
 	**	sha384
 	*/
-	basicTestCases.push_back(TestParam("./ft_ssl sha384 test_files/112len.txt", "09330c33f71147e83d192fc782cd1b4753111b173b3b05d22fa08086e3b0f712fcc7c71a557e2db966c3e9fa91746039 *test_files/112len.txt\n"));
+	basicTestCases.push_back(TestParam("./ft_ssl sha384 -r test_files/112len.txt", "09330c33f71147e83d192fc782cd1b4753111b173b3b05d22fa08086e3b0f712fcc7c71a557e2db966c3e9fa91746039 *test_files/112len.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha384 -shellllllllllllllllllloshellllllllllllllllllloshellllllllllllllll -s world",\
 	"SHA384 (\"hellllllllllllllllllloshellllllllllllllllllloshellllllllllllllll\") = 3d35c0e936c2d8a60c2ac247100f5687a32504bd89781f8a888c7ad8227a627bf3636ba341d177102260b9a7a710c9e7\n\
 SHA384 (\"world\") = a4d102bb2a39b6f1d9e481ef1a16b8948a0df2b594fd031bad6f201fbd6b0656846a6e58a30aa57ff34d912e7d3ea185\n"));
@@ -172,10 +172,10 @@ SHA384 (\"world\") = a4d102bb2a39b6f1d9e481ef1a16b8948a0df2b594fd031bad6f201fbd6
 	/*
 	**	sha512
 	*/
-	basicTestCases.push_back(TestParam("./ft_ssl sha512 test_files/112len.txt", "8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909 *test_files/112len.txt\n"));
+	basicTestCases.push_back(TestParam("./ft_ssl sha512 -r test_files/112len.txt", "8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909 *test_files/112len.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha512 -shellllllllllllllllllloshellllllllllllllllllloshellllllllllllllll -s world",\
-	"SHA512 (\"hellllllllllllllllllloshellllllllllllllllllloshellllllllllllllll\") = 5d760b196f0bfc5e5910414a3b46a56de3e4abb7bafcf6d3936cef2d928aaeaced6da300a5ea3ddaaf83b87bffe22e08c091371e1dc9988d9fd67cc6792a3fd2\n\
-SHA512 (\"world\") = e0494295cc1dfdd443d09f81913881a112745174778cc0c224ccc7137024fe41ddc73d909a7ea0f590f253a6a3c470cb9872b9e1ba06e61fbb7a5e9455eba6bb\n"));
+	"SHA512 (\"hellllllllllllllllllloshellllllllllllllllllloshellllllllllllllll\") = 6ac2cd94fd9b7ec954361da63e40614e41f800370bc3ef7030cdc4523214924e79f804b6b3e3c585c88b80901dcc6ee0ef953f7b71efe357e66f5989e53fa32d\n\
+SHA512 (\"world\") = 11853df40f4b2b919d3815f64792e58d08663767a494bcbb38c0b2389d9140bbb170281b4a847be7757bde12c9cd0054ce3652d0ad3a1a0c92babb69798246ee\n"));
 	/* flags */
 	basicTestCases.push_back(TestParam("./ft_ssl sha512 -r test_files/56.txt", "2c834fcf7d05e01b9286202cd8cb011518a832ddc8e4f0f9c11cd9f0df554d7bb70468d16e332b04f9017fed9d8778a75294e0e8c7fdeab623ea240bd38ea95f *test_files/56.txt\n"));
 	basicTestCases.push_back(TestParam("./ft_ssl sha512 -r test_files/67.txt", "597fd9e01e05e0b6d3c84d9bf4c29bb73fdb0a2312e623101d473a1fb3fd51cc2f96441ce05987d31b7154beb32f18fc0e3cc51fa02c8b0f9ea4547a62b212dd *test_files/67.txt\n"));
@@ -208,9 +208,9 @@ UnitTest::InitLongTermCases()
 	/*
 	**	sha384
 	*/
-	longTermTestCases.push_back(TestParam("./ft_ssl sha384 test_files/Xsizefile", "SHA384 (test_files/Xsizefile) = 3d8a65e4e753c86da623627e2fefa69e152b63f141e1794d083f5fea\n"));
+	longTermTestCases.push_back(TestParam("./ft_ssl sha384 test_files/Xsizefile", "SHA384 (test_files/Xsizefile) = 33b5dbc2d9c65ad62022b235f23fe30a70ae313417837cb381f9578385f88356535c3e0ae67aa1bb2c0fa5e392007a42\n"));
 	/*
 	**	sha512
 	*/
-	longTermTestCases.push_back(TestParam("./ft_ssl sha512 test_files/Xsizefile", "SHA512 (test_files/Xsizefile) = 3d8a65e4e753c86da623627e2fefa69e152b63f141e1794d083f5fea\n"));
+	longTermTestCases.push_back(TestParam("./ft_ssl sha512 test_files/Xsizefile", "SHA512 (test_files/Xsizefile) = 0b52ee6ffebf8e3751355111656ddf1744931453fdaad4b1c881a9554170f321a7558da09169ae240ad1617821237890e6cd8de1f563b04ef6815ad019327024\n"));
 }
