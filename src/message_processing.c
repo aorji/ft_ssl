@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 16:03:08 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/21 21:10:46 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,6 @@ static void hash_string(t_input *input, char *full_message, size_t size)
 			break;
 		start += g_buffsize;
 	}
-}
-
-char		*fstrjoin(char const *s1, char const *s2, size_t len1, size_t len2)
-{
-	char	*new;
-	size_t		i;
-	size_t		j;
-
-	if (!s1 || !s2)
-		return (0);
-	i = 0;
-	j = 0;
-	new = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
-	if (!new)
-		return (0);
-	while (i < len1)
-	{
-		new[i] = s1[j];
-		i++;
-		j++;
-	}
-	j = 0;
-	while (i < len1 +len2)
-	{
-		new[i] = s2[j];
-		i++;
-		j++;
-	}
-	new[i] = '\0';
-	return (new);
 }
 
 void process_message_from_stdin(t_input *input)
