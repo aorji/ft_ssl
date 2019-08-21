@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/08/19 11:51:23 by aorji            ###   ########.fr        #
+#    Updated: 2019/08/21 15:08:01 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,6 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) -o $(NAME) -I $(INC)
-	cd .. && make
-	cp ../ft_ssl .
 	echo "\033[32m[ ✔ ] "$(NAME) created" \033[0m"
 
 $(OBJ): $(OBJ_DIR)
@@ -45,11 +43,9 @@ $(OBJ_DIR)%.o:	$(SRC_DIR)%.cpp
 
 re:
 	make fclean
-	cd .. && make fclean
 	make
 
 clean:
-	rm -f ft_ssl
 	rm -f $(OBJ)
 	echo "\033[31m[ × ] "$(OBJ) removed" \033[0m"
 

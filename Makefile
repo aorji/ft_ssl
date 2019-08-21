@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/08/20 16:12:42 by aorji            ###   ########.fr        #
+#    Updated: 2019/08/21 15:14:46 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) -o $(NAME)	$(PRNTF) -I $(INC)
 	echo "\033[32m[ ✔ ] "$(NAME) created" \033[0m"
+	make -C ./test_ssl && cp ./test_ssl/ft_testssl .
 
 $(OBJ): $(LIB_DIR) $(OBJ_DIR)
 
@@ -59,11 +60,14 @@ re:
 
 clean:
 	make clean -C ./libft-ft_printf
+	make clean -C ./test_ssl
 	rm -f $(OBJ)
 	echo "\033[31m[ × ] "$(OBJ) removed" \033[0m"
 
 fclean: clean
 	make fclean -C ./libft-ft_printf
+	make fclean -C ./test_ssl
+	rm -f ft_testssl
 	rm -f $(NAME)
 	rm -rf $(OBJ_DIR)
 	rm -rf $(LIB_DIR)
