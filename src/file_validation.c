@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/09 15:30:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 15:35:58 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 14:33:25 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,12 @@ int		validate_file(t_input *input, int fd)
 {
 	if (fd == -1)
 	{
-		error_output(input->cmd_opts, (input->av)[input->position],\
-		strerror(errno));
+		error_output((input->av)[input->position], strerror(errno));
 		return (1);
 	}
 	if (is_dir((input->av)[input->position]))
 	{
-		error_output(input->cmd_opts, (input->av)[input->position],\
-		"Is a directory");
+		error_output((input->av)[input->position], "Is a directory");
 		close(fd);
 		return (1);
 	}

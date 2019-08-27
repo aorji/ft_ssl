@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 14:48:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 21:10:46 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 14:27:11 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void hash_string(t_input *input, char *full_message, size_t size)
 		else
 			part_size = g_buffsize;
 		set_message(input, full_message + start, full_message, part_size);
-		if (call_hashing_algorithm(input) == FINISH)
+		if (call_hashing_algorithm(input, NULL) == FINISH)
 			break;
 		start += g_buffsize;
 	}
@@ -68,7 +68,7 @@ void process_message_from_string(t_input *input, int j)
 	{
 		if (!(input->av)[input->position + 1])
 		{
-			error_output(input->cmd_opts, NULL, "option requires an \
+			error_output(NULL, "option requires an \
 argument -- s\nusage: md5 [-pqrtx] [-s string] [files ...]");
 			input->error = INVALIDE_FLAG;
 			return;
@@ -101,12 +101,12 @@ void process_message_from_file(t_input *input)
 			if (read_size != -1)
 			{
 				set_message(input, BUFF, (input->av)[input->position], read_size);
-				if (call_hashing_algorithm(input) == FINISH)
+				if (call_hashing_algorithm(input, NULL) == FINISH)
 					break;
 			}
 			else
 			{
-				error_output(input->cmd_opts, (input->av)[input->position], strerror( errno ));
+				error_output((input->av)[input->position], strerror( errno ));
 				close(fd);
 				continue;
 			}

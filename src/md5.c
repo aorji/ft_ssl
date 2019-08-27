@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:47:21 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 20:16:17 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 14:21:23 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ static void calculation_procedure(void *message, int times)
 /*
  * entry piont
  */
-enum mode md5(t_input *input)
+enum mode md5(t_input *input, char *func_name)
 {
+	if (func_name)
+		return (ft_strcmp(__func__, func_name));
     static enum mode hash_mode = START;
     (hash_mode == START) ? init_magic_num() : 0;
     if (input->message_size < n)
