@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 16:07:51 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 20:14:04 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 16:40:25 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ static void init_magic_num()
 /*
  * entry piont
  */
-enum mode sha512(t_input *input)
+enum mode sha512(t_input *input, char *func_name)
 {
+	if (func_name && input->error)
+		write(2, __func__, ft_strlen(__func__));
+	if (func_name)
+		return ft_strcmp(__func__, func_name);
 	static enum mode hash_mode = START;
     (hash_mode == START) ? init_magic_num() : 0;
     if (input->message_size < n)

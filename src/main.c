@@ -6,15 +6,15 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 13:03:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 17:41:11 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 16:18:32 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-enum mode	call_hashing_algorithm(t_input *input)
+enum mode	call_hashing_algorithm(t_input *input, char *func_name)
 {
-	return (*hashing_algorithm[input->cmd_opts - 1])(input);
+	return (*hashing_algorithm[input->cmd_opts - 1])(input, func_name);
 }
 
 static void run_hash_alg(t_input *input)

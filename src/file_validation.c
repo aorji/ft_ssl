@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/09 15:30:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/12 15:35:58 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 16:59:19 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ int		validate_file(t_input *input, int fd)
 {
 	if (fd == -1)
 	{
-		error_output(input->cmd_opts, (input->av)[input->position],\
-		strerror(errno));
+		input->error = INVALIDE_PARAM;
+		error_output(input, (input->av)[input->position], strerror(errno));
+		write(2, "\n", 1);
 		return (1);
 	}
 	if (is_dir((input->av)[input->position]))
 	{
-		error_output(input->cmd_opts, (input->av)[input->position],\
-		"Is a directory");
+		input->error = INVALIDE_PARAM;
+		error_output(input, (input->av)[input->position], "Is a directory");
+		write(2, "\n", 1);
 		close(fd);
 		return (1);
 	}

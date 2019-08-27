@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 20:56:47 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 16:35:03 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,19 @@ enum    error_type
     NO_ERROR = 0,
     NO_CMD = 1,
     INVALIDE_CMD = 2,
-    INVALIDE_FLAG = 3
+    INVALIDE_FLAG = 3,
+	INVALIDE_PARAM
 };
 
 enum    cmd_type
 {
-    NO_TYPE = 0,
-    MD5 = 1,
-    SHA224 = 3,
-    SHA256 = 2,
-    SHA384 = 4,
-    SHA512 = 5
+    NO_TYPE,
+    MD5,
+    SHA224,
+    SHA256,
+    SHA384,
+    SHA512,
+	NUM_OF_CMD
 };
 
 typedef	struct		s_input
@@ -76,14 +78,13 @@ enum    mode
 
 void            reset_arr(uint8_t dst[], char src[], int dstlen, int srclen);
 
-enum mode  md5(t_input *input);
-enum mode  sha224(t_input *input);
-enum mode  sha256(t_input *input);
-enum mode  sha384(t_input *input);
-enum mode  sha512(t_input *input);
-enum mode  call_hashing_algorithm(t_input *input);
-
-static enum mode  (*hashing_algorithm[])(t_input *input) = { &md5, &sha224, &sha256, &sha384, &sha512 };
+enum mode  md5(t_input *input, char *func_name);
+enum mode  sha224(t_input *input, char *func_name);
+enum mode  sha256(t_input *input, char *func_name);
+enum mode  sha384(t_input *input, char *func_name);
+enum mode  sha512(t_input *input, char *func_name);
+enum mode  call_hashing_algorithm(t_input *input, char *func_name);
+static enum mode  (*hashing_algorithm[])(t_input *input, char *func_name) = { &md5, &sha224, &sha256, &sha384, &sha512 };
 
 /*  structure_processing.c  */
 t_input         *init_input(int ac, char **av);
@@ -92,7 +93,7 @@ void            set_flag(t_input *input, char flag, int i);
 uint8_t             get_flag(t_input *input, char c);
 
 void            validate_input(t_input *input);
-void            error_output(enum cmd_type cmd, char *filename, char *error_str);
+void            error_output(t_input *input, char *filename, char *error_str);
 
 /*  flags_processing.c      */
 void            process_flags(t_input *input);

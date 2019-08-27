@@ -6,18 +6,18 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 19:37:59 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 17:05:55 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
 
-static char *cmd_arr[] = { "md5", "sha224", "sha256", "sha384", "sha512" };
+// static char *g_cmd_arr[] = { "md5", "sha224", "sha256", "sha384", "sha512" };
 
-void		error_output(enum cmd_type cmd, char *name, char *error_str)
+void		error_output(t_input *input, char *name, char *error_str)
 {
-	if (cmd > 1 && cmd < 5)
-		write(2, cmd_arr[cmd - 1], ft_strlen(cmd_arr[cmd - 1]));
+	if (input->cmd_opts)
+		hashing_algorithm[input->cmd_opts - 1](input, "ERROR");
 	else
 		write(2, "ft_ssl", 6);
 	write(2, ": ", 2);
@@ -27,17 +27,17 @@ void		error_output(enum cmd_type cmd, char *name, char *error_str)
 		write(2, ": ", 2);
 	}
 	write(2, error_str, ft_strlen(error_str));
-	write(2, "\n", 1);
+	// write(2, "\n", 1);
 }
 
 void	validate_input(t_input *input)
 {
+
 	if (input->error)
 		return ;
 	int i = 0;
-	int options_num = sizeof(cmd_arr) / sizeof(cmd_arr[0]);
-	while (i < options_num)
-		if (!ft_strcmp((input->av)[1], cmd_arr[i++]))
+	while (i < NUM_OF_CMD - 1)
+		if ( !hashing_algorithm[i++](input, (input->av)[1]) )
 			input->cmd_opts = i;
 	if (input->cmd_opts >= 4)
 	{
@@ -47,8 +47,15 @@ void	validate_input(t_input *input)
 	if (!(input->cmd_opts))
 	{
 		input->error = INVALIDE_CMD;
-		error_output(input->cmd_opts, (input->av)[1],
+		error_output(input, (input->av)[1],
 		" is an invalid command.\nStandard commands:\n\n\
-Message Digest commands:\nmd5\nsha256\nsha224\nsha384\nsha512\n\nCipher commands:\n");
+Message Digest commands:\n");
+		i = 0;
+		while (i < NUM_OF_CMD - 1)
+		{
+			hashing_algorithm[i++](input, "ERROR");
+			write(2, "\n", 1);
+		}
+		write(2, "\nCipher commands:\n\n", 19);
 	}
 }

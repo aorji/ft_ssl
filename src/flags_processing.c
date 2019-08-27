@@ -6,11 +6,19 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 14:41:54 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 17:52:52 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 16:57:37 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ssl.h"
+
+static void		error(t_input *input, char flag)
+{
+	error_output(input, NULL, "illegal option -- ");
+	// write(2, "ft_ssl: illegal option -- ", 26);
+	write(2, &flag, 1);
+	write(2, "\nusage: ft_ssl [hash function name] [-pqr] [-s string] [files ...]\n", 67);
+}
 
 static void		add_flag(t_input *input)
 {
@@ -23,10 +31,8 @@ static void		add_flag(t_input *input)
 	{
 		if (flag < input->flags_opt[0] || flag > input->flags_opt[FLAG_NUM - 1])
 		{
-			write(2, "md5: illegal option -- ", 23);
-			write(2, &flag, 1);
-			write(2, "\nusage: md5 [-pqr] [-s string] [files ...]\n", 44);
 			input->error = INVALIDE_FLAG;
+			error(input, flag);
 			return ;
 		}
 		set_flag(input, flag, 1);
