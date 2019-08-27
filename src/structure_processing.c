@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:29:29 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/27 16:24:59 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 21:51:12 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,10 @@ void	reset_arr(uint8_t dst[], char *src, int dstlen, int srclen)
 		dst[i] = 0;
 		i++;
 	}
+}
+
+void	join_cover(char *joined, char **old)
+{
+	ft_strdel(old);
+	*old = joined;
 }

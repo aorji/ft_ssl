@@ -6,7 +6,7 @@
 #    By: aorji <aorji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:57:32 by aorji             #+#    #+#              #
-#    Updated: 2019/08/21 20:54:39 by aorji            ###   ########.fr        #
+#    Updated: 2019/08/27 18:50:20 by aorji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,12 @@ LIB_DIR	=	./lib/
 CC      =	gcc
 FLAGS   =   -Wall -Wextra -Werror --debug
 
-SRC     =   main.c																				\
-			input_validator.c file_validation.c													\
-			message_processing.c flags_processing.c structure_processing.c						\
-			message_padding.c hash_output.c														\
-			md5.c																				\
-			sha256.c sha224.c sha224_256_auxiliary.c											\
+SRC     =   main.c																						\
+			input_validator.c file_validation.c															\
+			message_processing.c flags_processing.c structure_processing.c cmd_from_stdin_processing.c	\
+			message_padding.c hash_output.c																\
+			md5.c																						\
+			sha256.c sha224.c sha224_256_auxiliary.c													\
 			sha384.c sha512.c sha384_512_auxiliary.c 
 OBJ     =   $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 INC		=	$(INC_DIR)

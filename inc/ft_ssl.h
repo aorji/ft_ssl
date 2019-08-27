@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:06:17 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/27 17:57:17 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/27 21:51:27 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 
 #define FLAG_NUM 4
+#define usage "\nusage: ft_ssl [hash function name] [-pqr] [-s string] [files ...]\n"
 
 uint32_t g_buffsize, g_max_message_len;
 
@@ -78,6 +79,8 @@ enum    mode
 
 void            reset_arr(uint8_t dst[], char src[], int dstlen, int srclen);
 
+void	run_hash_alg(t_input *input);
+
 enum mode  md5(t_input *input, char *func_name);
 enum mode  sha224(t_input *input, char *func_name);
 enum mode  sha256(t_input *input, char *func_name);
@@ -91,6 +94,7 @@ t_input         *init_input(int ac, char **av);
 void            set_message(t_input *input, char *message, char *message_name, int size);
 void            set_flag(t_input *input, char flag, int i);
 uint8_t             get_flag(t_input *input, char c);
+void	join_cover(char *joined, char **old);
 
 void            validate_input(t_input *input);
 void            error_output(t_input *input, char *filename, char *error_str);
@@ -121,5 +125,8 @@ void			append_lenght(uint8_t message[], size_t from, size_t len, int padding_siz
 
 uint64_t		lit_to_bigendian64(uint64_t word);
 uint32_t		lit_to_bigendian(uint32_t word);
+
+/*	cmd_from_stdin_processing.c	*/
+void	stdin_cmd_processing(void);
 
 #endif
