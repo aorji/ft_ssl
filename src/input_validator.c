@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 16:36:40 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/27 18:32:44 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/28 17:51:55 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		validate_input(t_input *input)
 	{
 		input->error = INVALIDE_CMD;
 		error_output(input, (input->av)[1],
-		" is an invalid command.\nStandard commands:\n\n\
+		"is an invalid command.\nStandard commands:\n\n\
 Message Digest commands:\n");
 		hash_fanctions_names(input);
 		write(2, "\nCipher commands:\n\n", 19);

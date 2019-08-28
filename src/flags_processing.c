@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 14:41:54 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/27 21:42:16 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/28 18:00:09 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		error(t_input *input, char flag)
 {
 	error_output(input, NULL, "illegal option -- ");
 	write(2, &flag, 1);
-	write(2, usage, 67);
+	write(2, USAGE, ft_strlen(USAGE));
 }
 
 static void		add_flag(t_input *input)

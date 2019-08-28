@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 20:23:37 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/27 21:28:57 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/28 14:48:19 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,48 @@ int padding_size)
 		len = len >> 8;
 		i++;
 	}
+}
+
+/*
+** return number of blocks
+*/
+
+int		add_padding_bigend(t_input *input, size_t n, size_t a, int len_size)
+{
+	if (input->message_size < n)
+	{
+		if (input->message_size >= a)
+		{
+			append_padding(input->message, input->message_size,
+			g_max_message_len);
+			append_lenght_bigend(input->message, g_max_message_len,
+			input->total_size * BIT_NUM, len_size);
+			return (2);
+		}
+		append_padding(input->message, input->message_size, a);
+		append_lenght_bigend(input->message, a,
+		input->total_size * BIT_NUM, len_size);
+		return (1);
+	}
+	return (1);
+}
+
+int		add_padding(t_input *input, size_t n, size_t a, int len_size)
+{
+	if (input->message_size < n)
+	{
+		if (input->message_size >= a)
+		{
+			append_padding(input->message, input->message_size,
+			g_max_message_len);
+			append_lenght(input->message, g_max_message_len,
+			input->total_size * BIT_NUM, len_size);
+			return (2);
+		}
+		append_padding(input->message, input->message_size, a);
+		append_lenght(input->message, a,
+		input->total_size * BIT_NUM, len_size);
+		return (1);
+	}
+	return (1);
 }

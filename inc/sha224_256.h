@@ -6,30 +6,36 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 17:49:11 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 20:19:16 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/28 17:00:58 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHA256_H
-# define SHA256_H
+#ifndef SHA224_256_H
+# define SHA224_256_H
+# include "../inc/ft_ssl.h"
 
-#include "../inc/ft_ssl.h"
-
-/* 
+/*
 **	Rotate, shift macros
 */
-#define ROTR(word, bits) (((word) >> (bits)) | ((word) << (32 - (bits))))
-#define SHR(word, bits) ((word) >> (bits))
 
-#define CH( x, y, z) (((x) & (y)) ^ ((~x) & (z)))
-#define MAJ( x, y, z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
+# define ROTR(word, bits) (((word) >> (bits)) | ((word) << (32 - (bits))))
+# define SHR(word, bits) ((word) >> (bits))
+# define CH( x, y, z) (((x) & (y)) ^ ((~x) & (z)))
+# define MAJ( x, y, z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
+# define BSIG0(x) (ROTR((x), 2)	^ ROTR((x), 13) ^ ROTR((x), 22))
+# define BSIG1(x) (ROTR((x), 6)	^ ROTR((x), 11) ^ ROTR((x), 25))
+# define SSIG0(x) (ROTR((x), 7)	^ ROTR((x), 18) ^ SHR((x), 3))
+# define SSIG1(x) (ROTR((x), 17) ^ ROTR((x), 19) ^ SHR((x), 10))
 
-#define BSIG0(x) (ROTR((x), 2)	^ ROTR((x), 13) ^ ROTR((x), 22))
-#define BSIG1(x) (ROTR((x), 6)	^ ROTR((x), 11) ^ ROTR((x), 25))
-#define SSIG0(x) (ROTR((x), 7)	^ ROTR((x), 18) ^ SHR((x), 3))
-#define SSIG1(x) (ROTR((x), 17) ^ ROTR((x), 19) ^ SHR((x), 10))
+/*
+**	A 64-bit representation of the length of the message before
+**	the padding bits were added
+**  is appended to the result of step 1 ==> 8 bytre
+*/
 
-static const uint32_t K[] = {
+# define LEN_SIZE 8
+
+static const uint32_t	g_k[] = {
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
 	0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -48,25 +54,20 @@ static const uint32_t K[] = {
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
-static uint32_t H[] = {
-	0,	0,	0,	0,	0,	0,	0,	0
+static uint32_t			g_h[] = {
+	0, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*
-** The message is "padded" (extended) so that its length (in bits) is congruent to 448, modulo 512
-** len = 448 mod 512 (in bytes: len = 56 mod 64) => len = a mod n  
+**	The message is "padded" (extended) so that its length (in bits)
+**	is congruent to 448, modulo 512
+**	len = 448 mod 512 (in bytes: len = 56 mod 64) => len = a mod n
 */
-static const int  n = 64;
-static const int  a = 56;
 
-/*
-** A 64-bit representation of the length of the message before the padding bits were added
-**  is appended to the result of step 1 ==> 8 bytre
-*/
-static const int LEN_SIZE = 8;
+static const int		g_n = 64;
+static const int		g_a = 56;
 
-static const int BIT_NUM = 8;
-
-void calculation_procedure32(void *message, int times, uint32_t H[]);
+void					calculation_procedure_32(void *message,\
+int block_num, uint32_t h[]);
 
 #endif

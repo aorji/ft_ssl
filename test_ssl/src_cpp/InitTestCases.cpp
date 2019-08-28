@@ -6,7 +6,7 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 20:15:05 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 20:53:01 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/28 17:39:58 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ UnitTest::InitErrorCases()
 	errorTestCases.push_back(TestParam("./ft_ssl md5 -sh -s", "MD5 (\"h\") = 2510c39011c5be704182423e3a695e91\n"));
 	errorTestCases.push_back(TestParam("./ft_ssl md5 -d", ""));
 	// errorTestCases.push_back(TestParam("./ft_ssl", "usage: ft_ssl command [command opts] [command args]\n"));
-	errorTestCases.push_back(TestParam("./ft_ssl md5 -r test_ssl/test_files/67.txt -q test_ssl/test_files/test_with_nonewline.c", "148c0ad822a6b9020256b3e5482eab00 *test_ssl/test_files/67.txt\n\
-bab8b3201b99cbabedd725597d545804 *test_ssl/test_files/test_with_nonewline.c\n"));
+	errorTestCases.push_back(TestParam("./ft_ssl md5 -r test_ssl/test_files/67.txt -q test_ssl/test_files/test_with_nonewline", "148c0ad822a6b9020256b3e5482eab00 *test_ssl/test_files/67.txt\n\
+bab8b3201b99cbabedd725597d545804 *test_ssl/test_files/test_with_nonewline\n"));
 	/*
 	**	sha256
 	*/

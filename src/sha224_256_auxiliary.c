@@ -6,91 +6,103 @@
 /*   By: aorji <aorji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 18:52:19 by aorji             #+#    #+#             */
-/*   Updated: 2019/08/21 19:35:32 by aorji            ###   ########.fr       */
+/*   Updated: 2019/08/28 17:56:58 by aorji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/sha224_256.h"
 
-uint32_t lit_to_bigendian(uint32_t word)
+uint32_t	lit_to_bigendian(uint32_t word)
 {
-	return (0x000000ff & word) << 24 | (0x0000ff00 & word) << 8 | (0x00ff0000 & word) >> 8 | (0xff000000 & word) >> 24;
+	return (0x000000ff & word) << 24 | (0x0000ff00 & word) << 8 |\
+	(0x00ff0000 & word) >> 8 | (0xff000000 & word) >> 24;
 }
 
-static void convert_message(uint32_t W[64], uint32_t *message)
+static void	convert_message(uint32_t w[64], uint32_t *message)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	while (i < 16)
 	{
-		W[i] = lit_to_bigendian(message[i]);
+		w[i] = lit_to_bigendian(message[i]);
 		i++;
 	}
 }
 
-static void fill_working_variables(uint32_t HH[], uint32_t H[], char c)
+static void	fill_working_variables(uint32_t hh[], uint32_t g_h[], char c)
 {
 	if (c == '<')
 	{
-		HH[0] = H[0];
-		HH[1] = H[1];
-		HH[2] = H[2];
-		HH[3] = H[3];
-		HH[4] = H[4];
-		HH[5] = H[5];
-		HH[6] = H[6];
-		HH[7] = H[7];
+		hh[0] = g_h[0];
+		hh[1] = g_h[1];
+		hh[2] = g_h[2];
+		hh[3] = g_h[3];
+		hh[4] = g_h[4];
+		hh[5] = g_h[5];
+		hh[6] = g_h[6];
+		hh[7] = g_h[7];
 	}
 	else if (c == '>')
 	{
-		H[0] = HH[0] + H[0];
-		H[1] = HH[1] + H[1];
-		H[2] = HH[2] + H[2];
-		H[3] = HH[3] + H[3];
-		H[4] = HH[4] + H[4];
-		H[5] = HH[5] + H[5];
-		H[6] = HH[6] + H[6];
-		H[7] = HH[7] + H[7];
+		g_h[0] = hh[0] + g_h[0];
+		g_h[1] = hh[1] + g_h[1];
+		g_h[2] = hh[2] + g_h[2];
+		g_h[3] = hh[3] + g_h[3];
+		g_h[4] = hh[4] + g_h[4];
+		g_h[5] = hh[5] + g_h[5];
+		g_h[6] = hh[6] + g_h[6];
+		g_h[7] = hh[7] + g_h[7];
+	}
+}
+
+static void	calculate(uint32_t w[64], uint32_t hh[8])
+{
+	uint32_t	t[2];
+	int			i;
+
+	i = 0;
+	while (i < 64)
+	{
+		t[0] = hh[7] + BSIG1(hh[4]) + CH(hh[4], hh[5], hh[6]) + g_k[i] + w[i];
+		t[1] = BSIG0(hh[0]) + MAJ(hh[0], hh[1], hh[2]);
+		hh[7] = hh[6];
+		hh[6] = hh[5];
+		hh[5] = hh[4];
+		hh[4] = hh[3] + t[0];
+		hh[3] = hh[2];
+		hh[2] = hh[1];
+		hh[1] = hh[0];
+		hh[0] = t[0] + t[1];
+		i++;
 	}
 }
 
 /*
- * step 3
- */
-void calculation_procedure32(void *message, int times, uint32_t H[])
+** step 3
+*/
+
+void		calculation_procedure_32(void *message,\
+int block_num, uint32_t g_h[])
 {
-    int offset = 0;
-	int t;
-	uint32_t W[64] = {0};
-	uint32_t T[2] = {0};
+	int			offset;
+	int			i;
+	uint32_t	w[64];
+	uint32_t	hh[8];
 
-	uint32_t HH[] = {0,	0,	0,	0,	0,	0,	0,	0};
-
-    while ( times-- )
-    {
-		convert_message(W, (uint32_t *)(message) + offset);
-		t = 16;
-		while ( t < 64)
+	offset = 0;
+	while (block_num--)
+	{
+		convert_message(w, (uint32_t *)(message) + offset);
+		i = 16;
+		while (i < 64)
 		{
-			W[t] = SSIG1(W[t-2]) + W[t-7] + SSIG0(W[t-15]) + W[t-16];
-			t++;
+			w[i] = SSIG1(w[i - 2]) + w[i - 7] + SSIG0(w[i - 15]) + w[i - 16];
+			i++;
 		}
-		fill_working_variables(HH, H, '<');
-		t = 0;
-		while (t < 64)
-		{
-			T[0] = HH[7] + BSIG1(HH[4]) + CH(HH[4], HH[5], HH[6]) + K[t] + W[t];
-			T[1] = BSIG0(HH[0]) + MAJ(HH[0], HH[1], HH[2]);
-			HH[7] = HH[6];
-			HH[6] = HH[5];
-			HH[5] = HH[4];
-			HH[4] = HH[3] + T[0];
-			HH[3] = HH[2];
-			HH[2] = HH[1];
-			HH[1] = HH[0];
-			HH[0] = T[0] + T[1];
-			t++;
-		}
-		fill_working_variables(HH, H, '>');
+		fill_working_variables(hh, g_h, '<');
+		calculate(w, hh);
+		fill_working_variables(hh, g_h, '>');
 		offset += 16;
 	}
 }
